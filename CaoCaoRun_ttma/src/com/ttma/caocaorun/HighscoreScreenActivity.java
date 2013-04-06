@@ -2,12 +2,9 @@ package com.ttma.caocaorun;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -15,8 +12,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.ttma.caocaorun.VisualFX.BubbleButton;
 import com.ttma.caocaorun.utilities.BitmapCollection;
@@ -31,9 +26,7 @@ public class HighscoreScreenActivity extends Activity implements OnTouchListener
 	
 	private HighscoreScreen highscoreScreen;
 
-	private Bitmap fontSheet, background, bubble;
-
-	private Paint backgroundColor = new Paint();
+	private Bitmap fontSheet, background;
 
 	private Canvas canvas;// this object for drawings, passed in the buttons
 
@@ -47,20 +40,15 @@ public class HighscoreScreenActivity extends Activity implements OnTouchListener
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
-		bitmapCollection=new BitmapCollection();
-		back = bitmapCollection.getBack(getResources());
+		back = BitmapFactory.decodeResource(getResources(),
+				R.drawable.back);
 		
 		background = BitmapFactory.decodeResource(getResources(),
 				R.drawable.background);
 
 		fontSheet=BitmapFactory.decodeResource(getResources(),
 				R.drawable.babycakefont);
-		
-		bubble = BitmapFactory.decodeResource(getResources(), R.drawable.buble);
 
 		highscoreScreen = new HighscoreScreen(this);// set draw component here
 		highscoreScreen.setOnTouchListener(this);// set touch component here
@@ -117,9 +105,6 @@ public class HighscoreScreenActivity extends Activity implements OnTouchListener
 					bubletext[0]= new BubleText("NAME", 0.2f, 0.3f,24,0.2f);
 					bubletext[1]= new BubleText("SCORE", 0.6f, 0.3f,24,0.2f);
 					
-					
-					backgroundColor.setARGB(255, 0, 0, 0);
-					
 					isLoadSP = true;
 				}
 				canvas = holder.lockCanvas();
@@ -161,14 +146,12 @@ public class HighscoreScreenActivity extends Activity implements OnTouchListener
 
 		protected void onDraw(Canvas canvas) {
 
-			canvas.drawRect(0, 0, highscoreScreen.getWidth(),
-					highscoreScreen.getHeight(), backgroundColor);
-
 			Rect[] backgroundFrame = BitmapSynchroniser.getSynchonisedRect(
 					background, highscoreScreen.getWidth() / 2,
 					highscoreScreen.getHeight() / 2, true, false);
 			canvas.drawBitmap(background, backgroundFrame[0],
 					backgroundFrame[1], null);
+			
 			bubletext[0].onDraw(canvas);
 			bubletext[1].onDraw(canvas);
 			// BubleText.drawToString(30,30,canvas);
@@ -178,8 +161,7 @@ public class HighscoreScreenActivity extends Activity implements OnTouchListener
 		public void onTouchButton(){
 			// go to other screen when touch button
 			if (backButton.onTouch(touchX, touchY)) {
-				Intent homeIntent = new Intent("com.ttma.caocaorun.HOMESCREEN");
-				startActivity(homeIntent);
+				finish(); // test for memory problem.
 				}		
 			}
 	}
@@ -194,9 +176,9 @@ public class HighscoreScreenActivity extends Activity implements OnTouchListener
 			this.touchX = (int) temp_x;
 			this.touchY = (int) temp_y;
 			break;
-//		case MotionEvent.ACTION_UP:
-//			this.touchX = 0;
-//			this.touchY = 0;
+		case MotionEvent.ACTION_UP:
+			this.touchX = 0;
+			this.touchY = 0;
 		}
 		return true;
 	}
