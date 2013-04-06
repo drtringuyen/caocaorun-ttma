@@ -24,7 +24,7 @@ public class HomeScreenActivity extends Activity implements OnTouchListener {
 
 	HomeScreen homeScreen;
 	CreditsScreenActivity creditsScreen;
-	OptionScreenActivity optionScreen;
+	CreditsScreenActivity optionScreen;
 	ModeScreenActivity modeScreen;
 	BitmapCollection bitmapCollection;
 	
@@ -37,10 +37,6 @@ public class HomeScreenActivity extends Activity implements OnTouchListener {
 	private int touchX, touchY;
 
 	private int FPS = 30;
-	
-	boolean isOptionScreen=false;
-	boolean isModeScreen=false;
-	boolean isCreditsScreen=false;
 
 	// these are buttons that used for homepage
 	BubbleButton playButton, optionsButton, highScoresButton, creditsButton;
@@ -90,9 +86,6 @@ public class HomeScreenActivity extends Activity implements OnTouchListener {
 		SurfaceHolder holder;
 		boolean isOk = false;
 		boolean isLoadSP = false;
-		boolean isLoadOptionView = false;
-		boolean isLoadModeView = false;
-		boolean isLoadCreditsView=false;
 		long ticksPs = 1000 / FPS;
 		long startTime;
 		long sleepTime;
@@ -131,60 +124,11 @@ public class HomeScreenActivity extends Activity implements OnTouchListener {
 					// backgroundColor.setColor(Color.BLACK);
 					isLoadSP = true;
 				}
-				if(!isLoadOptionView){
-					optionScreen=new OptionScreenActivity(homeScreen,getResources());
-					isLoadOptionView=true;
-				}
-				if(!isLoadModeView){
-					modeScreen= new ModeScreenActivity(homeScreen, getResources());
-					isLoadModeView=true;
-				}
-				if(!isLoadCreditsView){
-					creditsScreen= new CreditsScreenActivity(homeScreen, getResources());
-					isLoadCreditsView=true;
-				}
 				
 				canvas = holder.lockCanvas();
-				if(isOptionScreen || isModeScreen || isCreditsScreen ){
-					playButton.staytill();
-					optionsButton.staytill();
-					highScoresButton.staytill();
-					creditsButton.staytill();
-					onDrawHomeScreen(canvas);
-					if(isOptionScreen){				
-						onDrawOptionScreen(canvas);
-						optionScreen.optionScreenControlButton(touchX, touchY);
-						if(optionScreen.onResume(touchX, touchY)){
-							isOptionScreen=false;
-						}
-					}
-					if(isModeScreen){
-						onDrawModeScreen(canvas);
-						Intent modeIntent = modeScreen.modeScreenControlButton(touchX, touchY);
-						if(modeIntent!=null){
-							startActivity(modeIntent);
-						}
-						if(modeScreen.onResume(touchX, touchY)){
-							isModeScreen=false;
-						}
-					}
-					if(isCreditsScreen){
-						onDrawCreditsScreen(canvas);
-						if(creditsScreen.onResume(touchX, touchY)){
-							isCreditsScreen=false;
-						}
-					}
-					touchX=0;
-					touchY=0;
-				}
-				else{
-					playButton.fly();
-					optionsButton.fly();
-					highScoresButton.fly();
-					creditsButton.fly();
-					onDrawHomeScreen(canvas);
-					homeScreen.homeScreenControlButton();
-				}
+				
+				onDrawHomeScreen(canvas);
+				homeScreen.homeScreenControlButton();
 				
 				holder.unlockCanvasAndPost(canvas);
 				
@@ -237,23 +181,16 @@ public class HomeScreenActivity extends Activity implements OnTouchListener {
 		highScoresButton.updateAndDraw(canvas, touchX, touchY);
 		creditsButton.updateAndDraw(canvas, touchX, touchY);
 		}
-		protected void onDrawModeScreen(Canvas canvas){
-			modeScreen.onDraw(canvas);
-		}
-		protected void onDrawOptionScreen(Canvas canvas) {			
-			optionScreen.onDraw(canvas);
-		}
-		protected void onDrawCreditsScreen(Canvas canvas) {			
-			creditsScreen.onDraw(canvas);
-		}
+
 		//end onDraw
 		public void homeScreenControlButton(){
-			if(true){
 			if(playButton.onTouch(touchX, touchY)){
-				 isModeScreen=true;
+				 
 			}
 			if(optionsButton.onTouch(touchX, touchY)){
-				 isOptionScreen=true;
+				Intent optionIntent = new
+						Intent("com.ttma.caocaorun.OPTIONSCREEN");
+						startActivity(optionIntent);
 			}
 			if(highScoresButton.onTouch(touchX, touchY)){
 				Intent highScoreIntent = new
@@ -261,11 +198,11 @@ public class HomeScreenActivity extends Activity implements OnTouchListener {
 				startActivity(highScoreIntent);
 			}
 			 if(creditsButton.onTouch(touchX, touchY)){
-				isCreditsScreen=true;
+				Intent creditsIntent = new
+				Intent("com.ttma.caocaorun.CREDITSSCREEN");
+				startActivity(creditsIntent);
 			}
-			 touchX=0;
-			 touchY=0;
-			}
+			
 		}
 	}
 
