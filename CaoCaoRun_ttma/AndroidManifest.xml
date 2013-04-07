@@ -22,9 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity
-            android:name="com.ttma.caocaorun.HomeScreenActivity"
+            android:name="com.ttma.caocaorun.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
@@ -32,60 +31,17 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
-          <activity
-            android:name="com.ttma.caocaorun.ModeScreenActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="com.ttma.caocaorun.MODESCREEN" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
-          <activity
-            android:name="com.ttma.caocaorun.CreditsScreenActivity"
-            android:theme="@style/PopUpByTai" 
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="com.ttma.caocaorun.CREDITSSCREEN" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
-          <activity
-            android:name="com.ttma.caocaorun.HighscoreScreenActivity"
-            android:theme="@style/PopUpByTai"            
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="com.ttma.caocaorun.HIGHSCORESCREEN" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name="com.ttma.caocaorun.CreditsScreenActivity"
-            android:theme="@style/PopUpByTai"            
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="com.ttma.caocaorun.OPTIONSCREEN" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
+      
         <activity
             android:name="test.touch.TouchExample"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.ttma.caocaorun.ENDLESSMODE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        
     </application>
 
 </manifest>

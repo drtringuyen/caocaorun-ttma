@@ -1,24 +1,24 @@
 package com.ttma.caocaorun;
 
-import com.ttma.caocaorun.VisualFX.BubbleButton;
-import com.ttma.caocaorun.utilities.BitmapCollection;
-import com.ttma.caocaorun.utilities.BitmapSynchroniser;
-
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.SurfaceView;
-class ModeScreenActivity{
+
+import com.ttma.caocaorun.VisualFX.BubbleButton;
+import com.ttma.caocaorun.utilities.BitmapCollection;
+import com.ttma.caocaorun.utilities.BitmapSynchroniser;
+class ModeScreen{
+	
 	Bitmap back,quiz,horror,endless,custom;
 	Bitmap background;
 	BitmapCollection bitmapCollection;
 	BubbleButton endlessButton,quizButton,horrorButton,customButton,backButton;
 	SurfaceView screen;
 
-	public ModeScreenActivity(SurfaceView _screen, Resources _resources){
+	public ModeScreen(SurfaceView _screen, Resources _resources){
 		screen=_screen;
 		bitmapCollection = new BitmapCollection();
 		back = bitmapCollection.getBack(_resources);
@@ -40,24 +40,24 @@ class ModeScreenActivity{
 				back,0.83f, 0.11f, 0.1f);
 		backButton.staytill();
 	}
-	protected void onDraw(Canvas _canvas){
+	protected void onDraw(Canvas canvas){
 
 		Rect[] backgroundFrame = BitmapSynchroniser.getSynchonisedRect(
 				background, screen.getWidth() / 2,
 				screen.getHeight() / 2, true, false);
 		
-		_canvas.drawBitmap(background, backgroundFrame[0],
+		canvas.drawBitmap(background, backgroundFrame[0],
 				backgroundFrame[1], null);
 		
-		endlessButton.updateAndDraw(_canvas);
-		quizButton.updateAndDraw(_canvas);
-		horrorButton.updateAndDraw(_canvas);
-		customButton.updateAndDraw(_canvas);
-		backButton.updateAndDraw(_canvas);
+		endlessButton.updateAndDraw(canvas);
+		quizButton.updateAndDraw(canvas);
+		horrorButton.updateAndDraw(canvas);
+		customButton.updateAndDraw(canvas);
+		backButton.updateAndDraw(canvas);
 	}
 	
-	public boolean onResume(int _touchX, int _touchY){
-		if(backButton.onTouch(_touchX, _touchY)){
+	public boolean onResume(int touchX, int touchY){
+		if(backButton.onTouch(touchX, touchY)){
 			return true;
 		}
 		else{
@@ -65,8 +65,8 @@ class ModeScreenActivity{
 		}
 	}
 	
-	public Intent modeScreenControlButton(int _touchX, int _touchY){
-		if(endlessButton.onTouch(_touchX, _touchY)){
+	public Intent modeScreenControlButton(int touchX, int touchY){
+		if(endlessButton.onTouch(touchX, touchY)){
 			Intent endlessIntent = new
 			Intent("com.ttma.caocaorun.ENDLESSMODE");
 			return endlessIntent;
