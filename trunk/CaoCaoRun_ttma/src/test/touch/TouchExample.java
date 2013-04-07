@@ -7,6 +7,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -26,21 +28,21 @@ public class TouchExample extends Activity implements OnTouchListener {
 	DrawPoop drawPoop;
 	Bitmap spreadSheet, background,poop;
 
-	public int row = 10;
-	public int column = 10;
+	
+	public int FPS = 30;
 	
 	//control sweep
 	public float x_start;
 	public float y_start;
 	public float x_end;
 	public float y_end;
+	public float delx;
+	public float dely;
 
 	public int poop_maze_x;
 	public int poop_maze_y;//N=0 , E=1, S=2, W=3
-	public boolean isMove;
+	public boolean updatePoop = false;
 	///////////////////////////////////////
-	
-	public Cell[][] Maze = new Cell[100][100];
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +80,17 @@ public class TouchExample extends Activity implements OnTouchListener {
 	}
 
 	public class TouchScreen extends SurfaceView implements Runnable{
-		int delayTime = 100;
+		long ticksPs = 1000 / FPS;
+		long startTime;
+		long sleepTime;
+		
+		long time_update_poop=0;
+		long temp=0;
+		
+		int row = 5;
+		int column = 5;
+		Cell[][] Maze;
+		
 		Thread control=null;
 		SurfaceHolder holder;
 		boolean isIsOk = false;
@@ -86,13 +98,11 @@ public class TouchExample extends Activity implements OnTouchListener {
 		boolean isLoadDrawPoop=false;
 		boolean isLoadProvideInput=false;
 		boolean isLoadDrawMaze=false;
+		boolean isGenerateMaze=false;
 		
 		public TouchScreen(Context context) {
 			super(context);
-			MazeGenerator mazeGenerator = new MazeGenerator(row, column);
-			Maze = mazeGenerator.getMaze();
-			poop_maze_x=0;
-			poop_maze_y=0;
+			
 			//control thread
 			holder = getHolder();
 			
@@ -105,12 +115,6 @@ public class TouchExample extends Activity implements OnTouchListener {
 			// TODO Auto-generated method stub
 			
 			while(isIsOk==true){
-				try {
-					Thread.sleep(delayTime);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				if(!holder.getSurface().isValid()){
 					continue;
 				}
@@ -118,6 +122,14 @@ public class TouchExample extends Activity implements OnTouchListener {
 					screenProperties = new ScreenProperties(tscreen,spreadSheet,background,poop,
 							row,column);
 					isLoadProperty=true;
+				}
+				if(!isGenerateMaze){
+					MazeGenerator mazeGenerator = new MazeGenerator(row, column);
+					
+					Maze = mazeGenerator.getMaze();
+					poop_maze_x=0;
+					poop_maze_y=0;
+					isGenerateMaze=true;
 				}
 				if(!isLoadDrawMaze){
 					drawMaze = new DrawMaze(tscreen,
@@ -128,16 +140,34 @@ public class TouchExample extends Activity implements OnTouchListener {
 					drawPoop = new DrawPoop(tscreen,Maze,screenProperties);
 					isLoadDrawPoop=true;
 				}
-					c = holder.lockCanvas();					
-					onDraw(c);
+				if(drawPoop.checkPoopAtEnd()){
+					row=row+1;
+					column=column+1;
+					isGenerateMaze=false;
+					isLoadDrawMaze=false;
+					isLoadDrawPoop=false;
+					isLoadProperty=false;
+				}
+					c = holder.lockCanvas();
+					onDraw(c,updatePoop);
 					holder.unlockCanvasAndPost(c);				
 			}			
 		}
-		protected void onDraw(Canvas canvas) {			
+		
+		protected void onDraw(Canvas canvas,boolean updatePoop) {			
 			drawMaze.onDraw(canvas);
 			drawPoop.onDraw(canvas,x_end,x_start,
-					y_end,y_start,isMove);
-			isMove=false;
+					y_end,y_start,updatePoop);
+			
+			
+			Paint textPaint = new Paint();
+			textPaint.setColor(Color.CYAN);
+			canvas.drawText(Boolean.toString(updatePoop), 100, 100, textPaint);
+			
+			canvas.drawText(Float.toString(x_start), 100, 150, textPaint);
+			canvas.drawText(Float.toString(y_start), 150, 150, textPaint);
+			canvas.drawText(Float.toString(x_end), 100, 200, textPaint);
+			canvas.drawText(Float.toString(y_end), 150, 200, textPaint);
 		}
 		
 		public void pause(){
@@ -173,12 +203,37 @@ public class TouchExample extends Activity implements OnTouchListener {
 			x_start=event.getX();
 			y_start=event.getY();
 			break;
-		case MotionEvent.ACTION_UP:
+		case MotionEvent.ACTION_MOVE:
 			x_end=event.getX();
 			y_end=event.getY();
-			isMove=true;
+			delx= x_end-x_start;
+			dely= y_end-y_start;
+			if(Math.abs(delx)>10 || Math.abs(dely)>10){
+//			if(Math.abs(delx)>screenProperties.getSCALED_SIZE() || Math.abs(dely)>screenProperties.getSCALED_SIZE()){
+				updatePoop=true;
+				x_start=x_end;
+				y_start=y_end;
+			}else{updatePoop=false;}
+			break;
+		case MotionEvent.ACTION_UP:
+			x_start=0;
+			x_end=0;
+			y_start=0;
+			y_end=0;
 			break;
 		}
+		
+//		switch(event.getAction()){
+//		case MotionEvent.ACTION_DOWN:
+//			x_start=event.getX();
+//			y_start=event.getY();
+//			break;
+//		case MotionEvent.ACTION_UP:
+//			x_end=event.getX();
+//			y_end=event.getY();
+//			isMove=true;
+//			break;
+//		}
 		return true;
 	}
 	
