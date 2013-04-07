@@ -1,5 +1,6 @@
-package com.ttma.caocaorun;
+package com.ttma.caocaorun.draw.screen;
 
+import com.ttma.caocaorun.MainActivity;
 import com.ttma.caocaorun.VisualFX.BubbleButton;
 import com.ttma.caocaorun.utilities.BitmapCollection;
 import com.ttma.caocaorun.utilities.BitmapSynchroniser;
@@ -11,21 +12,21 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.SurfaceView;
 
-class HighScoreScreen{
-	BitmapCollection bitmapCollection;
-	BubbleButton resumeButton;
-	Bitmap back,fontSheet, background, bubble;
-	BubleText[] bubletext = new BubleText[5];
-	SurfaceView screen;
+public class HighScoreScreen{
 	
-	public HighScoreScreen(SurfaceView _screen, Resources _resources){
-		screen=_screen;
+	private BitmapCollection bitmapCollection;
+	private BubbleButton resumeButton;
+	private Bitmap back,fontSheet, background;
+	private BubleText[] bubletext = new BubleText[5];
+	
+	private boolean selected=false;
+	
+	public HighScoreScreen(SurfaceView screen, Resources resources){
 		bitmapCollection = new BitmapCollection();
 		
-		back=bitmapCollection.getBack(_resources);
-		background=bitmapCollection.getBackground(_resources);	
-		fontSheet=bitmapCollection.getFontSheet(_resources);
-		bubble=bitmapCollection.getBubble(_resources);
+		back=bitmapCollection.getBack(resources);
+		background=bitmapCollection.getBackground(resources);	
+		fontSheet=bitmapCollection.getFontSheet(resources);
 		
 		BubleText.setInitalParameter(fontSheet);
 		
@@ -41,9 +42,8 @@ class HighScoreScreen{
 	}
 	protected void onDraw(Canvas canvas){
 		
-		Rect[] backgroundFrame = BitmapSynchroniser.getSynchonisedRect(
-				background, screen.getWidth() / 2,
-				screen.getHeight() / 2, true, false);
+		Rect[] backgroundFrame = BitmapSynchroniser.getBackGroundRects(
+				background);
 		
 		canvas.drawBitmap(background, backgroundFrame[0],
 				backgroundFrame[1], null);
@@ -55,11 +55,15 @@ class HighScoreScreen{
 		bubletext[4].onDraw(canvas);
 		
 		resumeButton.updateAndDraw(canvas);
+//		onResume();
 		
 	}
 	
-	public boolean onResume(int _touchX, int _touchY){
-		if(resumeButton.onTouch(_touchX, _touchY)){
+	public boolean onResume(){
+		int touchX=MainActivity.getTouchX();
+		int touchY=MainActivity.getTouchY();
+		if(resumeButton.onTouch(touchX, touchY)){
+			deselected();
 			return true;
 		}
 		else{
@@ -67,7 +71,22 @@ class HighScoreScreen{
 		}
 	}
 	
+	public void bringToTop(Canvas canvas){
+		selected();
+		onDraw(canvas);
+		onResume();
+	}
+	
 	public void creditsScreenControlButton(int _touchX, int _touchY){
 		
+	}
+	public void selected(){
+		this.selected=true;
+	}
+	public void deselected(){
+		this.selected=false;
+	}
+	public boolean isSelected(){
+		return this.selected;
 	}
 }

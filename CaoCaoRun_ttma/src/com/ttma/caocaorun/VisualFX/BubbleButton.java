@@ -53,6 +53,14 @@ public class BubbleButton {
 		return false;
 	}
 	
+	public boolean onPress(int touchX, int touchY,boolean isPress) {
+		if (touchArea.contains(touchX, touchY)&&(isPress)) {
+//			if (isPress) this.staytill(); else fly();
+			return true;
+		}
+		return false;
+	}
+	
 	public void changeBimap(Bitmap bitmap){
 		this.bitmap=bitmap;
 	}

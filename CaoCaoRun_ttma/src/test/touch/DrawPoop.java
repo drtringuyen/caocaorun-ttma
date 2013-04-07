@@ -14,7 +14,7 @@ class DrawPoop {
 		public int[] Patch = new int[10000];
 		public int ROW;
 		public int COLUMN;
-		
+
 		ControlPoop controlPoop;
 		///////////////////////////////////////
 		
@@ -39,12 +39,12 @@ class DrawPoop {
 		// TODO Auto-generated constructor stub
 	}
 	public void onDraw(Canvas canvas,float x_end, float x_start,
-			float y_end, float y_start, boolean updatePoop) {
+			float y_end, float y_start, boolean isMove) {
 		// TODO Auto-generated method stub
 		
-		if(updatePoop){
+		if(isMove)
 		update(x_end, x_start, y_end, y_start);
-		}
+
 		canvas.drawBitmap(poop, poop_x_pixel, poop_y_pixel, null);
 	}
 	
@@ -84,7 +84,7 @@ class DrawPoop {
 		return false;
 	}
 	
-	public boolean checkPoopAtEnd(){
+	private boolean checkPoopAtEnd(){
 		if(poop_maze_x==COLUMN-1 && poop_maze_y==ROW-1){
 			return true;
 		}
