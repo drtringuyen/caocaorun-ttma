@@ -19,7 +19,7 @@ public class BubleText {
 	
 	private float fontSize;
 	
-	private float width, height;
+	private float width;
 
 	private Rect cropFix;
 
@@ -37,7 +37,7 @@ public class BubleText {
 		
 		this.cropFix = BitmapSynchroniser.getScourceRectFromSprite(fontsheet,
 				0, column, row);
-		this.height = cropFix.height();
+//		this.height = cropFix.height();
 		this.width = cropFix.width();
 		this.fontSize=this.width / BitmapSynchroniser.getDefautWidth() * fontSize;
 	}

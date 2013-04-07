@@ -1,12 +1,8 @@
 package com.ttma.caocaorun.utilities;
 
-import java.io.InputStream;
-
-import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
 
 import com.ttma.caocaorun.R;
 

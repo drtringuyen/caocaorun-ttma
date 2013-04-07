@@ -2,7 +2,7 @@ package com.ttma.caocaorun.utilities;
 
 import android.graphics.Bitmap;
 import android.graphics.Rect;
-import android.view.SurfaceView;
+import android.view.Display;
 
 public class BitmapSynchroniser {
 
@@ -13,22 +13,16 @@ public class BitmapSynchroniser {
 
 	private static float ratio;
 
-	public static void setInitialParameters(SurfaceView screen,
+	@SuppressWarnings("deprecation")
+	public static void setInitialParameters(Display display,
 			Bitmap standardBitmap) {
-
 		// float standardWidth = standardBitmap.getWidth();
 		float standardHeight = standardBitmap.getHeight();
-
-		defautHeight = screen.getHeight();
-		defautWidth = screen.getWidth();
+		
+		defautHeight = display.getHeight();
+		defautWidth = display.getWidth();
 
 		float ratioH = defautHeight / standardHeight;
-		// float ratioW = defautWidth / standardWidth;
-
-		// if (ratioH < ratioW)
-		// ratio = ratioW;
-		// else
-		// ratio = ratioH;
 
 		ratio = ratioH;
 	}
@@ -196,17 +190,22 @@ public class BitmapSynchroniser {
 
 	// ################################### methods to get Synchroniser
 	// ##################################################
-	public static Rect[] getSynchonisedRect(Bitmap bitmap, int x, int y,
-			boolean fromCenter, boolean isButton) {
+	public static Rect[] getBackGroundRects(Bitmap bitmap) {
 		Rect[] result = new Rect[2];
 		result[0] = getSourceRect(bitmap);
-		result[1] = getDestinationRect(bitmap, x, y, fromCenter, isButton);
+		int x=(int) (defautWidth/2);
+		int y=(int) (defautHeight/2);
+		result[1] = getDestinationRect(bitmap, x, y, true, false);
 		return result;
 	}
-
-	// public static Rect[] getSynchronisedSqueezedRect(){
-	// return new Rect();
-	// }
+	
+//	public static Rect[] getBackGroundRects(Bitmap bitmap, int x, int y,
+//			boolean fromCenter, boolean isButton) {
+//		Rect[] result = new Rect[2];
+//		result[0] = getSourceRect(bitmap);
+//		result[1] = getDestinationRect(bitmap, x, y, fromCenter, isButton);
+//		return result;
+//	}
 
 	public static Rect getBoundaryRect(Rect original, int boundary) {
 		getBoundaryRect(original, boundary, boundary, boundary, boundary);
