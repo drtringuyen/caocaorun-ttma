@@ -9,12 +9,15 @@ public class ControlPoop {
 		int goTo=-1;
 		float delx = x_end-x_start;
 		float dely = y_end-y_start;
-		if(uselessTouch(delx, dely)) goTo=-1;
-		else{
-			goTo= findPoopWay(delx, dely);
-			if(checkWall(currentCell, goTo))
-				goTo=-1;
-		}
+//		if(uselessTouch(delx, dely)) goTo=-1;
+//		else{
+//			goTo= findPoopWay(delx, dely);
+//			if(checkWall(currentCell, goTo))
+//				goTo=-1;
+//		}
+		goTo= findPoopWay(delx, dely);
+		if(checkWall(currentCell, goTo))
+			goTo=-1;
 		return goTo;
 	}
 	
