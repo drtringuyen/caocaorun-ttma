@@ -55,7 +55,9 @@ public final class R {
         public static final int activity_main=0x7f070000;
     }
     public static final class raw {
-        public static final int anniversary=0x7f040000;
+        public static final int bubble=0x7f040000;
+        public static final int music=0x7f040001;
+        public static final int poop=0x7f040002;
     }
     public static final class string {
         public static final int app_name=0x7f060000;

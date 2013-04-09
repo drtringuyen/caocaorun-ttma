@@ -4,6 +4,7 @@ import com.ttma.caocaorun.MainActivity;
 import com.ttma.caocaorun.VisualFX.BubbleButton;
 import com.ttma.caocaorun.utilities.BitmapCollection;
 import com.ttma.caocaorun.utilities.BitmapSynchroniser;
+import com.ttma.caocaorun.utilities.SoundFactory;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -90,12 +91,12 @@ public class OptionScreen {
 	public void activateButton() {
 		int touchX = MainActivity.getTouchX();
 		int touchY = MainActivity.getTouchY();
-		boolean isPress=MainActivity.isPress();
+		boolean isPress = MainActivity.isPress();
 
 		switchFX(touchX, touchY);
 		switchSound(touchX, touchY);
 		switchMusic(touchX, touchY);
-		
+
 		MainActivity.resetXY();
 		changeGameOption();
 	}
@@ -103,22 +104,27 @@ public class OptionScreen {
 	private void switchMusic(int touchX, int touchY) {
 		if (musicButton.onTouch(touchX, touchY)) {
 			musicSwitch = !musicSwitch;
-			if (musicSwitch)
+			if (musicSwitch) {
 				musicButton.changeBimap(musicOff);
-			else
+				SoundFactory.stopMusic();
+			} else {
 				musicButton.changeBimap(musicOn);
+				SoundFactory.playMusic();
+			}
 		}
 	}
 
 	private void switchSound(int touchX, int touchY) {
 		if (soundButton.onTouch(touchX, touchY)) {
 			soundSwitch = !soundSwitch;
-			if (soundSwitch){
+			if (soundSwitch) {
 				soundButton.changeBimap(soundOff);
-//				soundButton.staytill();
-			}else{
+				SoundFactory.disableBubbleSound();
+				// soundButton.staytill();
+			} else {
 				soundButton.changeBimap(soundOn);
-//				soundButton.fly();
+				SoundFactory.enableBubbleSound();
+				// soundButton.fly();
 			}
 		}
 	}
@@ -126,10 +132,13 @@ public class OptionScreen {
 	private void switchFX(int touchX, int touchY) {
 		if (visualFxButton.onTouch(touchX, touchY)) {
 			visualFxSwitch = !visualFxSwitch;
-			if (visualFxSwitch)
+			if (visualFxSwitch) {
 				visualFxButton.changeBimap(visualFxOff);
-			else
+				BubbleButton.disableFly();
+			} else {
 				visualFxButton.changeBimap(visualFxOn);
+				BubbleButton.enableFly();
+			}
 		}
 	}
 

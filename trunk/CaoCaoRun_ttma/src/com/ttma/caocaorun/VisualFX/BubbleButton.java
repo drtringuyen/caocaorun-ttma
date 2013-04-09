@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 import com.ttma.caocaorun.utilities.BitmapSynchroniser;
+import com.ttma.caocaorun.utilities.SoundFactory;
 
 public class BubbleButton {
 
@@ -25,62 +26,75 @@ public class BubbleButton {
 	private static Paint backgroundColor = new Paint();
 	private static Paint bufferPaint = new Paint();
 	private Random generate = new Random();
-	
-	private boolean flyable=true;
+
+	private boolean canFly = true;
+	private static boolean allCanFly = true;
 
 	public BubbleButton(Rect touchArea, Bitmap bitmap) {
 		this.touchArea = touchArea;
 		this.bitmap = bitmap;
 		this.buttonFrame = BitmapSynchroniser.getSourceRect(this.bitmap);
 	}
-	
-	public BubbleButton(String name, Bitmap bitmap, float percentX, float percentY,
-			float percentExtension) {
-		
+
+	public BubbleButton(String name, Bitmap bitmap, float percentX,
+			float percentY, float percentExtension) {
+
 		setBasicInfo(name, bitmap);
-		
+
 		this.touchArea = BitmapSynchroniser.getDestinationRect(this.bitmap,
 				percentX, percentY, true);
-		
+
 		this.boundary = BitmapSynchroniser.getBoundaryRect(touchArea,
 				percentExtension);
 	}
-	
+
 	public boolean onTouch(int touchX, int touchY) {
 		if (touchArea.contains(touchX, touchY)) {
+			SoundFactory.playBubbleSound();
 			return true;
 		}
 		return false;
 	}
-	
-	public boolean onPress(int touchX, int touchY,boolean isPress) {
-		if (touchArea.contains(touchX, touchY)&&(isPress)) {
-//			if (isPress) this.staytill(); else fly();
+
+	public boolean onPress(int touchX, int touchY, boolean isPress) {
+		if (touchArea.contains(touchX, touchY) && (isPress)) {
+			// if (isPress) this.staytill(); else fly();
 			return true;
 		}
 		return false;
 	}
-	
-	public void changeBimap(Bitmap bitmap){
-		this.bitmap=bitmap;
+
+	public void changeBimap(Bitmap bitmap) {
+		this.bitmap = bitmap;
 	}
 
 	public void updateAndDraw(Canvas canvas) {
-		if (!boundary.equals(null)&&flyable) {
+		if (!boundary.equals(null) && canFly && allCanFly) {
 			bufferFrame = touchArea;
 			canvas.drawBitmap(this.bitmap, buttonFrame, bufferFrame,
 					bufferPaint);
 			updateTouchArea();// update the new touchArea
 		}
-//		if (isTouched) canvas.drawText(this.name + "Touched", 30, 30, backgroundColor);
+		if (!allCanFly)
+			resetOriginalPosition();
+		// if (isTouched) canvas.drawText(this.name + "Touched", 30, 30,
+		// backgroundColor);
 		canvas.drawBitmap(this.bitmap, buttonFrame, touchArea, null);
 	}
-	
-	public void updateAndDraw(Canvas canvas,int touchX,int touchY) {
+
+	public void updateAndDraw(Canvas canvas, int touchX, int touchY) {
 		updateAndDraw(canvas);
-		if (this.onTouch(touchX,touchY)) canvas.drawText(this.name + "Touched", 30, 30, backgroundColor);
+		if (this.onTouch(touchX, touchY))
+			canvas.drawText(this.name + "Touched", 30, 30, backgroundColor);
 	}
-	
+
+	private void resetOriginalPosition() {
+		int x = boundary.centerX();
+		int y = boundary.centerY();
+		Rect newTouchArea = BitmapSynchroniser.getDestinationRect(bitmap, x, y,
+				true, false);
+		this.touchArea=newTouchArea;
+	}
 
 	private void updateTouchArea() {
 
@@ -102,8 +116,8 @@ public class BubbleButton {
 
 		this.touchArea = newTouchArea;
 	}
-	
-	private void setBasicInfo(String name,Bitmap bitmap){
+
+	private void setBasicInfo(String name, Bitmap bitmap) {
 		this.name = name;
 		this.bitmap = bitmap;
 		this.buttonFrame = BitmapSynchroniser.getSourceRect(this.bitmap);
@@ -114,13 +128,22 @@ public class BubbleButton {
 			this.dy = generate.nextInt(3);
 		}
 	}
-	
-	public void staytill(){
-//		this.boundary=this.touchArea;
-		flyable=false;
+
+	public void staytill() {
+		// this.boundary=this.touchArea;
+		canFly = false;
 	}
-	public void fly(){
-//		this.boundary=this.touchArea;
-		flyable=true;
+
+	public void fly() {
+		// this.boundary=this.touchArea;
+		canFly = true;
+	}
+
+	public static void enableFly() {
+		allCanFly = true;
+	}
+
+	public static void disableFly() {
+		allCanFly = false;
 	}
 }
