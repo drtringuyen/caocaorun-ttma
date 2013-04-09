@@ -44,18 +44,18 @@ public class MazeGenerator {
 		int totalCell = this.HEIGHT * this.WIDTH;
 		Stack<Cell> cellStack = new Stack<Cell>();
 
-		Cell curentCell =getStartCell();
+		Cell currentCell =getStartCell();
 		
 		visitedCell = 1;
 
 		while (visitedCell < totalCell) {
 			
-			int curentX = curentCell.getXCoordinate();
-			int curentY = curentCell.getYCoordinate();
+			int curentX = currentCell.getXCoordinate();
+			int curentY = currentCell.getYCoordinate();
 
 			if (canGoAnyDirection(curentY, curentX)) {//so inside, they will chose until 1 satisfies
 
-				cellStack.push(curentCell);
+				cellStack.push(currentCell);
 				
 				System.out.printf("%d:%d i:%d \n", curentX,curentY,visitedCell);
 				
@@ -69,16 +69,16 @@ public class MazeGenerator {
 					
 					
 					goingCell = chooseDirectionToGo(curentY, curentX,
-							curentCell, randomDirection);
+							currentCell, randomDirection);
 					
 				}
 				
-				curentCell=goingCell;
+				currentCell=goingCell;
 				visitedCell++;
 				
 				
 			} else {//end of the road, pop out the last point with possible ways 
-				curentCell = cellStack.lastElement();
+				currentCell = cellStack.lastElement();
 				cellStack.pop();
 			}
 		}
@@ -98,7 +98,7 @@ public class MazeGenerator {
 	}
 
 	// getCell from position-------------------------------------------
-	private Cell getCurentCell(int Y, int X) {
+	private Cell getCurrentCell(int Y, int X) {
 		return maze[Y][X];
 	}
 
@@ -122,35 +122,35 @@ public class MazeGenerator {
 	// of getCell--------------------------------------------
 
 	// break the walls
-	private Cell chooseDirectionToGo(int Y, int X, Cell curentCell,
+	private Cell chooseDirectionToGo(int Y, int X, Cell currentCell,
 			int direction) {
 
 		if ((direction == 0) && (canGoNorth(Y, X))) {
-			curentCell.breakNorthWall();
-			curentCell = getNorthCell(Y, X);
-			curentCell.breakSouthWall();
-			return curentCell;
+			currentCell.breakNorthWall();
+			currentCell = getNorthCell(Y, X);
+			currentCell.breakSouthWall();
+			return currentCell;
 		}
 
 		if ((direction == 1) && (canGoEast(Y, X))) {
-			curentCell.breakEastWall();
-			curentCell = getEastCell(Y, X);
-			curentCell.breakWestWall();
-			return curentCell;
+			currentCell.breakEastWall();
+			currentCell = getEastCell(Y, X);
+			currentCell.breakWestWall();
+			return currentCell;
 		}
 
 		if ((direction == 2) && (canGoSouth(Y, X))) {
-			curentCell.breakSouthWall();
-			curentCell = getSouthCell(Y, X);
-			curentCell.breakNorthWall();
-			return curentCell;
+			currentCell.breakSouthWall();
+			currentCell = getSouthCell(Y, X);
+			currentCell.breakNorthWall();
+			return currentCell;
 		}
 
 		if ((direction == 3) && (canGoWest(Y, X))) {
-			curentCell.breakWestWall();
-			curentCell = getWestCell(Y, X);
-			curentCell.breakEastWall();
-			return curentCell;
+			currentCell.breakWestWall();
+			currentCell = getWestCell(Y, X);
+			currentCell.breakEastWall();
+			return currentCell;
 		}
 		return null;
 	}
@@ -211,7 +211,7 @@ public class MazeGenerator {
 	private Cell getStartCell() {
 		int randomY = generate.nextInt(HEIGHT);
 		int randomX = generate.nextInt(WIDTH);
-		Cell tempCell = getCurentCell(randomY, randomX);
+		Cell tempCell = getCurrentCell(randomY, randomX);
 		return tempCell;
 	}
 
