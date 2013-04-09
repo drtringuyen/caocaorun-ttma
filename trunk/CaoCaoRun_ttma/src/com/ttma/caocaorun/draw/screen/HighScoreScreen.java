@@ -30,11 +30,8 @@ public class HighScoreScreen{
 		
 		BubleText.setInitalParameter(fontSheet);
 		
-		bubletext[0]= new BubleText("CREDITS", 0.35f, 0.3f,24,0.2f);
-		bubletext[1]= new BubleText("Nguyen Duc Tri", 0.25f, 0.4f,18,0.2f);
-		bubletext[2]= new BubleText("Tran Huu Phuong Tai", 0.25f, 0.5f,18,0.2f);
-		bubletext[3]= new BubleText("Tran Ngoc Khanh Minh", 0.25f, 0.6f,18,0.2f);
-		bubletext[4]= new BubleText("Diep So Anh", 0.25f, 0.7f,18,0.2f);
+		bubletext[0]= new BubleText("NAME", 0.1f, 0.3f,24,0.2f);
+		bubletext[1]= new BubleText("SCORE", 0.55f, 0.3f,24,0.2f);
 		
 		resumeButton=new BubbleButton("resumeButton", 
 				back,0.83f, 0.11f, 0f);
@@ -50,9 +47,6 @@ public class HighScoreScreen{
 		
 		bubletext[0].onDraw(canvas);
 		bubletext[1].onDraw(canvas);
-		bubletext[2].onDraw(canvas);
-		bubletext[3].onDraw(canvas);
-		bubletext[4].onDraw(canvas);
 		
 		resumeButton.updateAndDraw(canvas);
 //		onResume();
