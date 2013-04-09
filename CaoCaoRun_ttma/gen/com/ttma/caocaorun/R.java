@@ -45,19 +45,22 @@ public final class R {
         public static final int upercasesheet=0x7f02001f;
     }
     public static final class id {
-        public static final int menu_settings=0x7f070000;
+        public static final int menu_settings=0x7f080000;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int manufacturer_screen=0x7f030001;
     }
     public static final class menu {
-        public static final int activity_main=0x7f060000;
+        public static final int activity_main=0x7f070000;
+    }
+    public static final class raw {
+        public static final int anniversary=0x7f040000;
     }
     public static final class string {
-        public static final int app_name=0x7f050000;
-        public static final int hello_world=0x7f050001;
-        public static final int menu_settings=0x7f050002;
+        public static final int app_name=0x7f060000;
+        public static final int hello_world=0x7f060001;
+        public static final int menu_settings=0x7f060002;
     }
     public static final class style {
         /** 
@@ -81,11 +84,11 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f040001;
+        public static final int AppBaseTheme=0x7f050001;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f040002;
-        public static final int PopUpByTai=0x7f040000;
+        public static final int AppTheme=0x7f050002;
+        public static final int PopUpByTai=0x7f050000;
     }
 }

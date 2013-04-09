@@ -2,6 +2,7 @@ package com.ttma.caocaorun;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.MotionEvent;
@@ -26,7 +27,10 @@ public class MainActivity extends Activity implements OnTouchListener {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-				
+		
+		MediaPlayer mplayer = MediaPlayer.create(this, R.raw.anniversary);
+		mplayer.start();
+			
 		controlViewHandler = new ControlViewHandler(this);// set draw component here
 					
 		controlViewHandler.setOnTouchListener(this);// set touch component here

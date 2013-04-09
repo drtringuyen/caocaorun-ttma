@@ -34,7 +34,7 @@ public class CreditScreen{
 		back=bitmapCollection.getBack(resources);
 		BubleText.setInitalParameter(fontSheet);
 		
-		bubletext[0]= new BubleText("CREDITS", 0.35f, 0.3f,24,0.2f);
+		bubletext[0]= new BubleText("CREDITS", 0.3f, 0.3f,24,0.2f);
 		bubletext[1]= new BubleText("Nguyen Duc Tri", 0.25f, 0.4f,18,0.2f);
 		bubletext[2]= new BubleText("Tran Huu Phuong Tai", 0.25f, 0.5f,18,0.2f);
 		bubletext[3]= new BubleText("Tran Ngoc Khanh Minh", 0.25f, 0.6f,18,0.2f);
