@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 
-import com.ttma.caocaorun.ControlViewHandler;
+import com.ttma.caocaorun.ControlView;
 import com.ttma.caocaorun.MainActivity;
 import com.ttma.caocaorun.VisualFX.BubbleButton;
 import com.ttma.caocaorun.utilities.BitmapCollection;
@@ -19,11 +19,11 @@ public class HomeScreen {
 
 	private boolean selected = false;
 
-	private ControlViewHandler screen;
+	private ControlView screen;
 
 	public Bitmap background, play, options, highscores, credits, bubble;
 
-	public HomeScreen(ControlViewHandler control, Resources resources) {
+	public HomeScreen(ControlView control, Resources resources) {
 
 		this.screen = control;
 

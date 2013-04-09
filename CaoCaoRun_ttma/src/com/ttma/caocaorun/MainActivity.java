@@ -1,6 +1,7 @@
 package com.ttma.caocaorun;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -13,14 +14,16 @@ import android.view.WindowManager;
 
 import com.ttma.caocaorun.utilities.BitmapCollection;
 import com.ttma.caocaorun.utilities.BitmapSynchroniser;
+import com.ttma.caocaorun.utilities.SoundFactory;
 
 public class MainActivity extends Activity implements OnTouchListener {
 
-	private ControlViewHandler controlViewHandler;
+	private ControlView controlViewHandler;
 	
 	private static int touchX, touchY;
 	private static boolean isPress;
-
+//	private static MediaPlayer mplayer;
+	
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
@@ -28,10 +31,12 @@ public class MainActivity extends Activity implements OnTouchListener {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
-		MediaPlayer mplayer = MediaPlayer.create(this, R.raw.anniversary);
-		mplayer.start();
-			
-		controlViewHandler = new ControlViewHandler(this);// set draw component here
+		MediaPlayer music = MediaPlayer.create(this, R.raw.music);
+		MediaPlayer poop = MediaPlayer.create(this, R.raw.poop);
+		MediaPlayer bubble = MediaPlayer.create(this, R.raw.bubble);
+//		mplayer.start();
+		
+		controlViewHandler = new ControlView(this);// set draw component here
 					
 		controlViewHandler.setOnTouchListener(this);// set touch component here
 		setContentView(controlViewHandler);
@@ -41,8 +46,10 @@ public class MainActivity extends Activity implements OnTouchListener {
 		Bitmap standardBitmap=bitmapCollection.getBackground(getResources());
 		
 		Display display = getWindowManager().getDefaultDisplay(); 
+		
 		BitmapSynchroniser.setInitialParameters(display,
 					standardBitmap);
+		SoundFactory.setInititate(music, poop, bubble);
 	}
 
 	@Override
@@ -74,6 +81,7 @@ public class MainActivity extends Activity implements OnTouchListener {
 	
 	@Override
 	protected void onStart() {
+		SoundFactory.playMusic();
 		super.onStart();
 	}
 
@@ -98,5 +106,8 @@ public class MainActivity extends Activity implements OnTouchListener {
 	}
 	public static boolean isPress(){
 		return isPress;
+	}
+	public void startIntent(Intent intent){
+		startActivity(intent);
 	}
 }

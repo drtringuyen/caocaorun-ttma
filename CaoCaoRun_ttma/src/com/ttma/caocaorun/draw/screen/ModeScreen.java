@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.view.SurfaceView;
 
+import com.ttma.caocaorun.ControlView;
 import com.ttma.caocaorun.MainActivity;
 import com.ttma.caocaorun.VisualFX.BubbleButton;
 import com.ttma.caocaorun.utilities.BitmapCollection;
@@ -21,6 +22,8 @@ public class ModeScreen {
 			backButton;
 
 	private boolean selected = false;
+	
+	ControlView screen;
 
 	public ModeScreen(SurfaceView screen, Resources resources) {
 
@@ -33,6 +36,7 @@ public class ModeScreen {
 		custom = bitmapCollection.getCustom(resources);
 		background = bitmapCollection.getModeScreen(resources);
 
+		this.screen=(ControlView)screen;
 		// create Buttons
 		endlessButton = new BubbleButton("endlessButton", endless, 0.61f,
 				0.28f, 0.1f);
@@ -71,17 +75,20 @@ public class ModeScreen {
 		}
 	}
 
-	public Intent activateButton(int touchX, int touchY) {
+	public void activateButton() {
+		int touchX = MainActivity.getTouchX();
+		int touchY = MainActivity.getTouchY();
+		
 		if (endlessButton.onTouch(touchX, touchY)) {
 			Intent endlessIntent = new Intent("com.ttma.caocaorun.ENDLESSMODE");
-			return endlessIntent;
+			screen.startIntent(endlessIntent);
 		}
-		return null;
 	}
 
 	public void bringToTop(Canvas canvas) {
 		selected();
 		onDraw(canvas);
+		activateButton();
 		onResume();
 	}
 
