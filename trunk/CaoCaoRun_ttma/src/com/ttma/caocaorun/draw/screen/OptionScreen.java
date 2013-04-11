@@ -14,6 +14,7 @@ import android.graphics.Rect;
 import android.view.SurfaceView;
 
 public class OptionScreen {
+	
 	private Bitmap optionBackground;
 	private Bitmap visualFxOn, soundOn, musicOn, back;
 	private Bitmap visualFxOff, soundOff, musicOff;
@@ -91,7 +92,7 @@ public class OptionScreen {
 	public void activateButton() {
 		int touchX = MainActivity.getTouchX();
 		int touchY = MainActivity.getTouchY();
-		boolean isPress = MainActivity.isPress();
+//		boolean isPress = MainActivity.isPress();
 
 		switchFX(touchX, touchY);
 		switchSound(touchX, touchY);
@@ -119,12 +120,10 @@ public class OptionScreen {
 			soundSwitch = !soundSwitch;
 			if (soundSwitch) {
 				soundButton.changeBimap(soundOff);
-				SoundFactory.disableBubbleSound();
-				// soundButton.staytill();
+				SoundFactory.disableSoundFX();
 			} else {
 				soundButton.changeBimap(soundOn);
-				SoundFactory.enableBubbleSound();
-				// soundButton.fly();
+				SoundFactory.enableSoundFX();
 			}
 		}
 	}
