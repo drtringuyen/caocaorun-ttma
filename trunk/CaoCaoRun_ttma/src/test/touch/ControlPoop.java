@@ -12,13 +12,44 @@ public class ControlPoop {
 		if(uselessTouch(delx, dely)) goTo=-1;
 		else{
 			goTo= findPoopWay(delx, dely);
-			if(checkWall(currentCell, goTo))
+			if(hasWall(currentCell, goTo))
 				goTo=-1;
 		}
 		return goTo;
 	}
 	
-	private boolean checkWall(Cell currentCell, int goTo){
+	public int autorun(Cell currentCell, int curGoto){
+		int nextGoTo=-1;
+		if(hasWall(currentCell, curGoto)){
+		switch(curGoto){
+			case 0:
+				if(currentCell.isWestWall()) nextGoTo=1;
+				else nextGoTo=3;
+				break;
+			case 1:
+				if(currentCell.isNorthWall()) nextGoTo=2;
+				else nextGoTo=0;
+				break;
+			case 2:
+				if(currentCell.isWestWall()) nextGoTo=1;
+				else nextGoTo=3;
+				break;
+			case 3:
+				if(currentCell.isNorthWall()) nextGoTo=2;
+				else nextGoTo=0;
+//				break;
+			}
+		}
+		else{
+			nextGoTo=curGoto;
+		}
+		if(currentCell.getTotalWall()==3){
+			nextGoTo=-1;
+		}
+		return nextGoTo;
+	}
+	
+	private boolean hasWall(Cell currentCell, int goTo){
 		switch(goTo){
 		case 0:
 			if(currentCell.isNorthWall())

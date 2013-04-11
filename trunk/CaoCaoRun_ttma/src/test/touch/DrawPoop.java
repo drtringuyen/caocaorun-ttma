@@ -25,6 +25,7 @@ class DrawPoop {
 	float poop_y_pixel;
 	int poop_maze_x;
 	int poop_maze_y;
+	int goTo=-1;
 
 	public DrawPoop(TouchScreen tscreen, Cell[][] maze,
 			ScreenProperties screenProperties) {
@@ -49,21 +50,46 @@ class DrawPoop {
 
 		if (isMove) {
 			SoundFactory.playPoopSound();
-			update(x_end, x_start, y_end, y_start);
+			goTo=update(x_end, x_start, y_end, y_start);
 		}
+		//the else here use for auto-run, if you want to stop autorun, just lock it.
+		else{
+			goTo=autorun_update();
+		}
+		
 
 		canvas.drawBitmap(poop, poop_x_pixel, poop_y_pixel, null);
 	}
 
-	private void update(float x_end, float x_start, float y_end, float y_start) {
+	private int update(float x_end, float x_start, float y_end, float y_start) {
 		Cell currentCell = Maze[poop_maze_y][poop_maze_x];
-		int goTo = controlPoop
+		int _goTo = controlPoop
 				.goTo(x_end, x_start, y_end, y_start, currentCell);
-		if (checkPoopAtBegin() && goTo == 0)
-			goTo = -1;
-		if (checkPoopAtEnd() && goTo == 2)
-			goTo = -1;
-		update_poop_status(goTo);
+		if (checkPoopAtBegin() && _goTo == 0)
+			_goTo = -1;
+		if (checkPoopAtEnd() && _goTo == 2)
+			_goTo = -1;
+		update_poop_status(_goTo);
+		return _goTo;
+	}
+	
+	private int autorun_update(){
+		Cell currentCell = Maze[poop_maze_y][poop_maze_x];
+		int _goTo=-1;
+		if(isAtCorner()==false){
+			_goTo=controlPoop.autorun(currentCell, goTo);
+		}
+		else{
+			_goTo=-1;
+		}
+		
+		if (checkPoopAtBegin() && _goTo == 0)
+			_goTo = -1;
+		if (checkPoopAtEnd() && _goTo == 2)
+			_goTo = -1;
+		
+		update_poop_status(_goTo);
+		return _goTo;
 	}
 
 	private void update_poop_status(int goTo) {
@@ -87,15 +113,23 @@ class DrawPoop {
 		}
 	}
 
-	private boolean checkPoopAtBegin() {
+	public boolean checkPoopAtBegin() {
 		if (poop_maze_x == 0 && poop_maze_y == 0) {
 			return true;
 		}
 		return false;
 	}
 
-	private boolean checkPoopAtEnd() {
+	public boolean checkPoopAtEnd() {
 		if (poop_maze_x == COLUMN - 1 && poop_maze_y == ROW - 1) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean isAtCorner(){
+		Cell currentCell = Maze[poop_maze_y][poop_maze_x];
+		if(currentCell.getTotalWall()<2){
 			return true;
 		}
 		return false;
