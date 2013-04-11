@@ -159,7 +159,6 @@ public class TouchExample extends Activity implements OnTouchListener {
 			control = new Thread(this);
 			control.start();
 		}
-		
 	}
 	
 	
