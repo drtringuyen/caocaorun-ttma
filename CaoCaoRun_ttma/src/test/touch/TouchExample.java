@@ -4,9 +4,12 @@ import MazeFactory.Cell;
 import MazeFactory.MazeGenerator;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -19,15 +22,26 @@ import android.view.WindowManager;
 import com.ttma.caocaorun.R;
 
 public class TouchExample extends Activity implements OnTouchListener {
-	TouchScreen tscreen;
 	
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		Intent mainActivity = new Intent("com.ttma.caocaorun.HOMESCREEN");
+		mainActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(mainActivity);
+	}
+
+
+	TouchScreen tscreen;
 	ScreenProperties screenProperties;
 	DrawMaze drawMaze;
 	DrawPoop drawPoop;
 	Bitmap spreadSheet, background,poop;
+	TimeSystem timeSystem;
 
-	public int row = 10;
-	public int column = 10;
+	public int row = 5;
+	public int column = 5;
 	
 	//control sweep
 	public float x_start;
@@ -38,6 +52,14 @@ public class TouchExample extends Activity implements OnTouchListener {
 	public int poop_maze_x;
 	public int poop_maze_y;//N=0 , E=1, S=2, W=3
 	public boolean isMove;
+	
+	public int FPS = 10;
+	private long ticksPs = 1000 / FPS;
+	private long startTime;
+	private long sleepTime;
+	
+	private long standardMin =1;
+	private long standardSec =30;
 	///////////////////////////////////////
 	
 	public Cell[][] Maze = new Cell[100][100];
@@ -78,21 +100,12 @@ public class TouchExample extends Activity implements OnTouchListener {
 	}
 
 	public class TouchScreen extends SurfaceView implements Runnable{
-		int delayTime = 100;
 		Thread control=null;
 		SurfaceHolder holder;
 		boolean isIsOk = false;
-		boolean isLoadProperty=false;
-		boolean isLoadDrawPoop=false;
-		boolean isLoadProvideInput=false;
-		boolean isLoadDrawMaze=false;
-		
+
 		public TouchScreen(Context context) {
 			super(context);
-			MazeGenerator mazeGenerator = new MazeGenerator(row, column);
-			Maze = mazeGenerator.getMaze();
-			poop_maze_x=0;
-			poop_maze_y=0;
 			//control thread
 			holder = getHolder();
 			
@@ -105,38 +118,33 @@ public class TouchExample extends Activity implements OnTouchListener {
 			// TODO Auto-generated method stub
 			
 			while(isIsOk==true){
-				try {
-					Thread.sleep(delayTime);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 				if(!holder.getSurface().isValid()){
 					continue;
 				}
-				if(!isLoadProperty){
-					screenProperties = new ScreenProperties(tscreen,spreadSheet,background,poop,
-							row,column);
-					isLoadProperty=true;
-				}
-				if(!isLoadDrawMaze){
-					drawMaze = new DrawMaze(tscreen,
-							Maze,screenProperties);
-					isLoadDrawMaze=true;
-				}
-				if(!isLoadDrawPoop){
-					drawPoop = new DrawPoop(tscreen,Maze,screenProperties);
-					isLoadDrawPoop=true;
-				}
+				loadAllDrawClass();
+				startTime = System.currentTimeMillis();
 					c = holder.lockCanvas();					
 					onDraw(c);
-					holder.unlockCanvasAndPost(c);				
+					holder.unlockCanvasAndPost(c);
+					if(drawPoop.checkPoopAtEnd()){
+						screenProperties=null;
+						drawMaze=null;
+						drawPoop=null;
+						row=row+1;
+						column=column+1;
+					}
+					
+					updateTime();
 			}			
 		}
 		protected void onDraw(Canvas canvas) {			
 			drawMaze.onDraw(canvas);
 			drawPoop.onDraw(canvas,x_end,x_start,
 					y_end,y_start,isMove);
+			Paint ptPaint = new Paint();
+			ptPaint.setColor(Color.BLACK);
+			canvas.drawText(Long.toString(timeSystem.showMin()), 200, 200, ptPaint);
+			canvas.drawText(Long.toString(timeSystem.showSec()), 200, 250, ptPaint);
 			isMove=false;
 		}
 		
@@ -159,6 +167,43 @@ public class TouchExample extends Activity implements OnTouchListener {
 			control = new Thread(this);
 			control.start();
 		}
+		
+		private void updateTime() {
+			sleepTime = ticksPs - (System.currentTimeMillis() - startTime);			
+			try {
+				if (sleepTime > 0)
+					Thread.sleep(sleepTime);
+				else
+					Thread.sleep(0);
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			timeSystem.decreasingTime(ticksPs);
+		}
+		
+		private void loadAllDrawClass(){
+			if(screenProperties==null){
+				screenProperties = new ScreenProperties(tscreen,spreadSheet,background,poop,
+						row,column);
+				MazeGenerator mazeGenerator = new MazeGenerator(row, column);
+				Maze = mazeGenerator.getMaze();
+				poop_maze_x=0;
+				poop_maze_y=0;
+			}
+			if(timeSystem==null){
+				timeSystem = new TimeSystem();
+			}
+			if(drawMaze==null){
+				drawMaze = new DrawMaze(tscreen,
+						Maze,screenProperties);
+				timeSystem.setTime(timeSystem.showMin()+standardMin, timeSystem.showSec()+standardSec);
+			}
+			if(drawPoop==null){
+				drawPoop = new DrawPoop(tscreen,Maze,screenProperties);
+			}
+			
+		}
+		
 	}
 	
 	

@@ -52,6 +52,11 @@ public class MainActivity extends Activity implements OnTouchListener {
 		SoundFactory.setInititate(music, poop, bubble);
 	}
 
+//	public static void starActivity(Intent activeIntent){
+//		if(activeIntent!=null){
+//			startActivity(activeIntent);
+//		}
+//	}
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 
@@ -109,5 +114,6 @@ public class MainActivity extends Activity implements OnTouchListener {
 	}
 	public void startIntent(Intent intent){
 		startActivity(intent);
+		finish();
 	}
 }

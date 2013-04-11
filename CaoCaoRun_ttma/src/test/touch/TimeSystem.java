@@ -1,8 +1,8 @@
 package test.touch;
 
 class TimeSystem {
-	private int min;
-	private int sec;
+	private long min;
+	private long sec;
 	private int base;
 	
 	public TimeSystem(){
@@ -11,11 +11,17 @@ class TimeSystem {
 		base=59000;
 	}
 	
-	public void setTime(int min, int sec){
-		this.min=min;
-		this.sec=sec*1000;
+	public void setTime(long min, long sec){
+		if(sec*1000>base){
+			this.min = min+1;
+			this.sec = sec*1000 - base-1000;
+		}
+		else{
+			this.min=min;
+			this.sec=sec*1000;
+		}
 	}
-	public void increasingTime(int delayTime){
+	public void increasingTime(long delayTime){
 		if(sec<base){
 		sec=sec+delayTime;
 		}
@@ -25,7 +31,7 @@ class TimeSystem {
 		}
 	}
 	
-	public void decreasingTime(int delayTime){
+	public void decreasingTime(long delayTime){
 		if(sec>0){
 			sec-=delayTime;
 		}
@@ -35,11 +41,11 @@ class TimeSystem {
 		}
 	}
 	
-	public int showSec(){
+	public long showSec(){
 		return sec/1000;
 	}
 	
-	public int showMin(){
+	public long showMin(){
 		return min;
 	}
 }
