@@ -79,21 +79,19 @@ public class ControlPoop {
 		else return false;
 	}
 	
-	private float calculateSin(float _delx, float _dely) {
+	private float calculateCurSin(float _delx, float _dely) {
 		float canh_huyen = (float) Math.sqrt(_delx*_delx + _dely*_dely);
-		float sin_now = (float)(_dely/canh_huyen);
 		
-		return sin_now;
+		return (_dely/canh_huyen);
 	}
 	
 	private int findPoopWay(float _delx, float _dely){
 		int goTo=-1;
-
 		//Don't know why direction is reverse ???
-		if(moveNorth(_delx, _dely, calculateSin(_delx, _dely))) goTo=2;
-		if(moveSouth(_delx, _dely, calculateSin(_delx, _dely))) goTo=0;
-		if(moveWest(_delx, _dely, calculateSin(_delx, _dely))) goTo=3;
-		if(moveEast(_delx, _dely, calculateSin(_delx, _dely))) goTo=1;
+		if(moveNorth(_delx, _dely, calculateCurSin(_delx, _dely))) goTo=2;
+		if(moveSouth(_delx, _dely, calculateCurSin(_delx, _dely))) goTo=0;
+		if(moveWest(_delx, _dely, calculateCurSin(_delx, _dely))) goTo=3;
+		if(moveEast(_delx, _dely, calculateCurSin(_delx, _dely))) goTo=1;
 		
 		return goTo;
 	}
