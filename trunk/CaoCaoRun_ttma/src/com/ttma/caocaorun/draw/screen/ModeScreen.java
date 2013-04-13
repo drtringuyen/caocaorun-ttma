@@ -81,6 +81,7 @@ public class ModeScreen {
 		int touchY = MainActivity.getTouchY();
 		
 		if (endlessButton.onTouch(touchX, touchY)) {
+			
 			Intent endlessIntent = new Intent("com.ttma.caocaorun.ENDLESSMODE");
 			endlessIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			screen.startIntent(endlessIntent);

@@ -14,11 +14,11 @@ import com.ttma.caocaorun.utilities.BitmapSynchroniser;
 
 public class HelpScreen {
 
-	private Bitmap back, next, help1, help2, help3, help4;
+	private Bitmap back, next, help1, help2, help3, help4,poop;
 	private Bitmap background;
 	private BitmapCollection bitmapCollection;
 	private BubbleButton help1Button, help2Button, help3Button, help4Button,
-			backButton, nextButton;
+			nextButton, poopStayTill;
 	private int step = 1;
 
 	private boolean selected = false;
@@ -31,6 +31,8 @@ public class HelpScreen {
 		bitmapCollection = new BitmapCollection();
 
 		background = bitmapCollection.getHelpScreen(resources);
+		
+		poop = bitmapCollection.getPoopStaytill(resources);
 
 		back = bitmapCollection.getBackWood(resources);
 		next = bitmapCollection.getNextWood(resources);
@@ -52,9 +54,10 @@ public class HelpScreen {
 				0.1f);
 
 		nextButton = new BubbleButton("backButton", next, 0.681f, 0.202f, 0.1f);
-		backButton = new BubbleButton("backButton", back, 0.318f, 0.103f, 0.1f);
+//		backButton = new BubbleButton("backButton", back, 0.318f, 0.103f, 0.1f);
 
-		backButton.staytill();
+//		backButton.staytill();
+//		poopStayTill= new BubbleButton("poop", poop, 0.681f, 0.202f, 0.1f);
 		nextButton.staytill();
 	}
 
@@ -75,7 +78,9 @@ public class HelpScreen {
 		if (step >= 4)
 			help4Button.updateAndDraw(canvas);
 
-		backButton.updateAndDraw(canvas);
+//		backButton.updateAndDraw(canvas);
+		if (step==4) nextButton.changeBimap(back);
+		if (step==1) nextButton.changeBimap(next);
 		nextButton.updateAndDraw(canvas);
 	}
 
@@ -95,8 +100,8 @@ public class HelpScreen {
 
 		if (nextButton.onTouch(touchX, touchY))
 			step++;
-		if (backButton.onTouch(touchX, touchY))
-			step--;
+//		if (backButton.onTouch(touchX, touchY))
+//			step--;
 		MainActivity.resetXY();
 	}
 

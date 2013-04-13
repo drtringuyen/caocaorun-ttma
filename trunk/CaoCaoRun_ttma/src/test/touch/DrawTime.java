@@ -8,10 +8,10 @@ import android.graphics.Rect;
 class DrawTime {
 	public Bitmap numberSheet;
 	private int number_size,number_height,scaleSize;
-	private int level_w=100;
-	private int level_h=50;
-	private int time_w=100;
-	private int time_h=100;
+	private int level_w=10;
+	private int level_h=10;
+	private int time_w=10;
+	private int time_h=40;
 	public DrawTime(TouchScreen tscreen,ScreenProperties screenProperties){
 		numberSheet = screenProperties.getNumberSheet();
 		number_size = screenProperties.getNumber_size();
