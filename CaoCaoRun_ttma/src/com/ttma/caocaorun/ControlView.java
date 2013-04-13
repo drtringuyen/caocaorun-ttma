@@ -1,6 +1,5 @@
 package com.ttma.caocaorun;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -19,7 +18,7 @@ public class ControlView extends SurfaceView implements Runnable {
 	private Thread controlViewScreen = null;
 	private SurfaceHolder holder;
 	
-	private Activity mainActivity;
+	private MainActivity mainActivity;
 
 	private boolean isOk = false;
 
@@ -160,6 +159,10 @@ public class ControlView extends SurfaceView implements Runnable {
 
 	public HighScoreScreen getHighScoreScreen() {
 		return highScoreScreen;
+	}
+	
+	public void exitGame(){
+		mainActivity.exitGame();
 	}
 	public HelpScreen getHelpScreen() {
 		return helpScreen;

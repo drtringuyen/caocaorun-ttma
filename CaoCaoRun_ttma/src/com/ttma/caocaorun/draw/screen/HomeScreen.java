@@ -80,7 +80,7 @@ public class HomeScreen {
 		canvas.drawBitmap(background, backgroundFrame[0], backgroundFrame[1],
 				null);
 
-		playButton.updateAndDraw(canvas);
+		
 		optionsButton.updateAndDraw(canvas);
 		highScoresButton.updateAndDraw(canvas);
 		creditsButton.updateAndDraw(canvas);
@@ -90,6 +90,7 @@ public class HomeScreen {
 		valve2.updateAndDraw(canvas);
 //		poopAnimated.updateAndDraw(canvas);
 		poopStaytill.updateAndDraw(canvas);
+		playButton.updateAndDraw(canvas);
 	}
 
 	public void activateButton() {
@@ -108,6 +109,9 @@ public class HomeScreen {
 		
 		if (highScoresButton.onTouch(touchX, touchY))
 			screen.getHighScoreScreen().selected();
+		
+		if(exitButton.onTouch(touchX, touchY))
+			screen.exitGame();	
 		
 		if (helpButton.onTouch(touchX, touchY))
 			screen.getHelpScreen().selected();
