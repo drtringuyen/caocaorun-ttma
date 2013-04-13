@@ -27,36 +27,45 @@ public class OptionScreen {
 	private boolean visualFxSwitch, soundSwitch, musicSwitch;
 
 	private Paint backgroundColor = new Paint();
+	
+	private SurfaceView screen;
 
-	public OptionScreen(SurfaceView screen, Resources _resources) {
-		backgroundColor.setARGB(150, 174, 207, 233);
+	public OptionScreen(SurfaceView screen, Resources resources) {
+		
+		this.screen=screen;
+		
+		backgroundColor.setARGB(50, 255, 255, 255);
 		bitmapCollection = new BitmapCollection();
 
-		optionBackground = bitmapCollection.getOptionBackground(_resources);
-		visualFxOn = bitmapCollection.getVisualFxOn(_resources);
-		visualFxOff = bitmapCollection.getVisualFxOff(_resources);
-		musicOn = bitmapCollection.getMusicOn(_resources);
-		musicOff = bitmapCollection.getMusicOff(_resources);
-		soundOn = bitmapCollection.getSoundOn(_resources);
-		soundOff = bitmapCollection.getSoundOff(_resources);
+		optionBackground = bitmapCollection.getOptionBackground(resources);
+		visualFxOn = bitmapCollection.getVisualFxOn(resources);
+		visualFxOff = bitmapCollection.getVisualFxOff(resources);
+		musicOn = bitmapCollection.getMusicOn(resources);
+		musicOff = bitmapCollection.getMusicOff(resources);
+		soundOn = bitmapCollection.getSoundOn(resources);
+		soundOff = bitmapCollection.getSoundOff(resources);
 
-		back = bitmapCollection.getBack(_resources);
+		back = bitmapCollection.getBack(resources);
 
 		getGameOption();
 		visualFxButton = new BubbleButton("visualEffectButton", visualFxOn,
-				0.66f, 0.7f, 0.2f);
-		soundButton = new BubbleButton("soundButton", soundOn, 0.77f, 0.51f,
+				0.66f, 0.65f, 0.2f);
+		soundButton = new BubbleButton("soundButton", soundOn, 0.77f, 0.47f,
 				0.2f);
-		musicButton = new BubbleButton("musicButton", musicOn, 0.53f, 0.4f,
+		musicButton = new BubbleButton("musicButton", musicOn, 0.53f, 0.36f,
 				0.2f);
 
-		backButton = new BubbleButton("resumeButton", back, 0.83f, 0.11f, 0f);
+		backButton = new BubbleButton("resumeButton", back, 0.67f, 0.906f, 0f);
 		backButton.staytill();
 	}
 
 	protected void onDraw(Canvas canvas) {
+		
 		Rect[] backgroundFrame = BitmapSynchroniser
 				.getBackGroundRects(optionBackground);
+		
+		canvas.drawRect(0, 0, screen.getWidth(),
+				screen.getHeight(), backgroundColor);
 
 		canvas.drawBitmap(optionBackground, backgroundFrame[0],
 				backgroundFrame[1], null);

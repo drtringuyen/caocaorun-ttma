@@ -69,17 +69,25 @@ public class BubbleButton {
 	}
 
 	public void updateAndDraw(Canvas canvas) {
+		
+		updateAndDrawBuffer(canvas);
+		
+		reCalculatePosition();
+		
+		canvas.drawBitmap(this.bitmap, buttonFrame, touchArea, null);
+	}
+	
+	private void updateAndDrawBuffer(Canvas canvas){
 		if (!boundary.equals(null) && canFly && allCanFly) {
 			bufferFrame = touchArea;
 			canvas.drawBitmap(this.bitmap, buttonFrame, bufferFrame,
 					bufferPaint);
 			updateTouchArea();// update the new touchArea
 		}
-		if (!allCanFly)
-			resetOriginalPosition();
-		// if (isTouched) canvas.drawText(this.name + "Touched", 30, 30,
-		// backgroundColor);
-		canvas.drawBitmap(this.bitmap, buttonFrame, touchArea, null);
+	}
+	
+	private void reCalculatePosition(){
+		if (!allCanFly) resetOriginalPosition();
 	}
 
 	public void updateAndDraw(Canvas canvas, int touchX, int touchY) {
@@ -87,7 +95,11 @@ public class BubbleButton {
 		if (this.onTouch(touchX, touchY))
 			canvas.drawText(this.name + "Touched", 30, 30, backgroundColor);
 	}
-
+	
+	public void updateButtonFrame(Rect newButtonFrame){
+		this.buttonFrame=newButtonFrame;
+	}
+	
 	private void resetOriginalPosition() {
 		int x = boundary.centerX();
 		int y = boundary.centerY();
@@ -96,8 +108,12 @@ public class BubbleButton {
 		this.touchArea=newTouchArea;
 	}
 
-	private void updateTouchArea() {
-
+	public void updateTouchArea() {
+		this.touchArea = getNewTouchArea();
+	}
+	
+	private Rect getNewTouchArea(){
+		
 		x = dx + touchArea.centerX();
 		y = dy + touchArea.centerY();
 
@@ -114,7 +130,7 @@ public class BubbleButton {
 			dy = -dy;
 		}
 
-		this.touchArea = newTouchArea;
+		return newTouchArea;
 	}
 
 	private void setBasicInfo(String name, Bitmap bitmap) {

@@ -11,6 +11,21 @@ public class BitmapCollection{
 	public Bitmap getBackground(Resources resources) {
 		return BitmapFactory.decodeResource(resources, R.drawable.background);
 	}
+	public Bitmap getCreditScreen(Resources resources) {
+		return BitmapFactory.decodeResource(resources, R.drawable.creditscreen);
+	}
+	public Bitmap getHomeScreen(Resources resources) {
+		return BitmapFactory.decodeResource(resources, R.drawable.homescreen);
+	}
+	public Bitmap getHelp(Resources resources) {
+		return BitmapFactory.decodeResource(resources, R.drawable.help);
+	}
+	public Bitmap getExit(Resources resources) {
+		return BitmapFactory.decodeResource(resources, R.drawable.exit);
+	}
+	public Bitmap getValve(Resources resources) {
+		return BitmapFactory.decodeResource(resources, R.drawable.valve);
+	}
 	public Bitmap getPlay(Resources resources) {
 		return BitmapFactory.decodeResource(resources, R.drawable.play);
 	}
@@ -19,6 +34,12 @@ public class BitmapCollection{
 	}
 	public Bitmap getHighscores(Resources resources) {
 		return BitmapFactory.decodeResource(resources, R.drawable.highscore);
+	}
+	public Bitmap getPoopStaytill(Resources resources) {
+		return BitmapFactory.decodeResource(resources, R.drawable.poopsmall);
+	}
+	public Bitmap getPoopAnimated(Resources resources) {
+		return BitmapFactory.decodeResource(resources, R.drawable.poopspreadsheet);
 	}
 	public Bitmap getCredits(Resources resources) {
 		return BitmapFactory.decodeResource(resources, R.drawable.credits);
@@ -30,7 +51,7 @@ public class BitmapCollection{
 		return BitmapFactory.decodeResource(resources, R.drawable.babycakefont);
 	}
 	public Bitmap getOptionBackground(Resources resources) {
-		return BitmapFactory.decodeResource(resources, R.drawable.optionssreen);
+		return BitmapFactory.decodeResource(resources, R.drawable.optionscreen);
 	}
 	public Bitmap getVisualFxOn(Resources resources) {
 		return BitmapFactory.decodeResource(resources, R.drawable.fxon);

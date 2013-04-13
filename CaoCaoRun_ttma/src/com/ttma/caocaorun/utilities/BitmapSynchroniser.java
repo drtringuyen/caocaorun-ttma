@@ -51,6 +51,22 @@ public class BitmapSynchroniser {
 				* bitmapWidth, bitmapHeight);
 		return result;
 	}
+	
+	public static Rect getDestinationFromStoryLine(Bitmap bitmap, float x, float y,
+			int numberOfFrame) {
+
+		float bitmapWidth = bitmap.getWidth() * ratio/numberOfFrame;
+		float bitmapHeight = bitmap.getHeight() * ratio;
+
+		x = x * defautWidth;
+		y = y * defautHeight;
+
+		Rect result = new Rect((int) (x - bitmapWidth / 2),
+				(int) (y - bitmapHeight / 2), (int) (x + bitmapWidth / 2),
+				(int) (y + bitmapHeight / 2));
+		return result;
+
+	}
 
 	public static Rect getScourceRectFromSprite(Bitmap bitmap, int index,
 			int column, int row) {

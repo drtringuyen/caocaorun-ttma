@@ -18,7 +18,7 @@ public class ControlView extends SurfaceView implements Runnable {
 	private Thread controlViewScreen = null;
 	private SurfaceHolder holder;
 	
-	Activity mainActivity;
+	private Activity mainActivity;
 
 	private boolean isOk = false;
 
@@ -90,6 +90,9 @@ public class ControlView extends SurfaceView implements Runnable {
 
 		if (isViewOptionScreen || isViewModeScreen || isViewCreditScreen
 				|| isViewHighScoreScreen) {
+			
+//			homeScreen.bringToBack(canvas); this is really important
+			
 			if (isViewOptionScreen)
 				optionScreen.bringToTop(canvas);
 			if (isViewModeScreen)
@@ -119,6 +122,7 @@ public class ControlView extends SurfaceView implements Runnable {
 	public void startIntent(Intent intent){
 		mainActivity.startActivity(intent);
 	}
+	
 	private void updateTime() {
 		sleepTime = ticksPs - (System.currentTimeMillis() - startTime);
 		try {
