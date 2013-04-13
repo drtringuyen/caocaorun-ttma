@@ -8,13 +8,15 @@ class ScreenProperties {
 	private int row;
 	private int column;
 	
-	private Bitmap spreadSheet, background,poop;
+	private Bitmap spreadSheet, background,poop,numberSheet;
 	
 	private int maze_y;
 	private int maze_x;
 	private int height;
 	private int width;
 
+	private int number_size;
+	private int number_height;
 	private int padding;
 	private int bitmap_size;
 	private int scale_size;
@@ -76,13 +78,16 @@ class ScreenProperties {
 	}
 	
 	public ScreenProperties(TouchScreen tscreen,Bitmap spreadSheet, Bitmap background, Bitmap poop, 
-			int row, int column){
+			Bitmap numberSheet, int row, int column){
 		this.tscreen=tscreen;
 		
 		this.column=column;
 		this.row=row;
 		
-		this.bitmap_size = spreadSheet.getWidth() / 4;	
+		this.bitmap_size = spreadSheet.getWidth() / 4;
+		this.number_size = numberSheet.getWidth() / 11;
+		this.number_height = numberSheet.getHeight();
+		
 		this.height = tscreen.getHeight();
 		this.width = tscreen.getWidth();
 
@@ -95,9 +100,22 @@ class ScreenProperties {
 		this.maze_y = height / 2 - scale_size * row / 2;
 		
 		this.spreadSheet=spreadSheet;
+		this.numberSheet=numberSheet;
 		this.background=Bitmap.createScaledBitmap(background, width, height, false);
 		this.poop=Bitmap.createScaledBitmap(poop, scale_size, scale_size, false);
 		
+	}
+
+	public int getNumber_height() {
+		return number_height;
+	}
+
+	public int getNumber_size() {
+		return number_size;
+	}
+
+	public Bitmap getNumberSheet() {
+		return numberSheet;
 	}
 	
 	

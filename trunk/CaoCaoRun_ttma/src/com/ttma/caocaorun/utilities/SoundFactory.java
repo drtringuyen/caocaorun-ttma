@@ -8,6 +8,8 @@ public class SoundFactory {
 	private static MediaPlayer poop;
 	private static MediaPlayer bubble;
 	
+	private static boolean musicOn=false;
+	
 	private static boolean soundFXOn=true;
 	
 	public static void setInititate(MediaPlayer music,MediaPlayer poop,MediaPlayer bubble){

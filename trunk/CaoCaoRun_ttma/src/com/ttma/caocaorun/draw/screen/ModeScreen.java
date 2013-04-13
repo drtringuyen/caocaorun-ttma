@@ -45,7 +45,7 @@ public class ModeScreen {
 				0.1f);
 		customButton = new BubbleButton("customButton", custom, 0.63f, 0.74f,
 				0.1f);
-		backButton = new BubbleButton("backButton", back, 0.83f, 0.11f, 0.1f);
+		backButton = new BubbleButton("backButton", back,  0.671f, 0.906f, 0.1f);
 		backButton.staytill();
 	}
 
@@ -56,12 +56,12 @@ public class ModeScreen {
 
 		canvas.drawBitmap(background, backgroundFrame[0], backgroundFrame[1],
 				null);
-
+		backButton.updateAndDraw(canvas);
 		endlessButton.updateAndDraw(canvas);
 		quizButton.updateAndDraw(canvas);
 		horrorButton.updateAndDraw(canvas);
 		customButton.updateAndDraw(canvas);
-		backButton.updateAndDraw(canvas);
+		
 	}
 
 	public boolean onResume() {
@@ -69,6 +69,7 @@ public class ModeScreen {
 		int touchY = MainActivity.getTouchY();
 		if (backButton.onTouch(touchX, touchY)) {
 			deselected();
+			MainActivity.resetXY();
 			return true;
 		} else {
 			return false;

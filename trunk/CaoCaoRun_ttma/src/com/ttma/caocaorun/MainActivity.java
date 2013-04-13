@@ -23,6 +23,7 @@ public class MainActivity extends Activity implements OnTouchListener {
 	private static int touchX, touchY;
 	private static boolean isPress;
 //	private static MediaPlayer mplayer;
+	MediaPlayer music,poop,bubble;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -31,11 +32,12 @@ public class MainActivity extends Activity implements OnTouchListener {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		
-		MediaPlayer music = MediaPlayer.create(this, R.raw.music);
-		MediaPlayer poop = MediaPlayer.create(this, R.raw.poop);
-		MediaPlayer bubble = MediaPlayer.create(this, R.raw.bubble);
+		music = MediaPlayer.create(this, R.raw.music);
+		poop = MediaPlayer.create(this, R.raw.poop);
+		bubble = MediaPlayer.create(this, R.raw.bubble);
 //		mplayer.start();
-		
+		touchX=0;
+		touchY=0;
 		controlViewHandler = new ControlView(this);// set draw component here
 					
 		controlViewHandler.setOnTouchListener(this);// set touch component here
@@ -50,6 +52,11 @@ public class MainActivity extends Activity implements OnTouchListener {
 		BitmapSynchroniser.setInitialParameters(display,
 					standardBitmap);
 		SoundFactory.setInititate(music, poop, bubble);
+	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -108,6 +115,12 @@ public class MainActivity extends Activity implements OnTouchListener {
 	}
 	public void startIntent(Intent intent){
 		startActivity(intent);
+		finish();
+	}
+	public void exitGame(){
+		music.stop();
+		poop.stop();
+		bubble.stop();
 		finish();
 	}
 }

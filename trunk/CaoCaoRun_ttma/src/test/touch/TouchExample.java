@@ -37,12 +37,14 @@ public class TouchExample extends Activity implements OnTouchListener {
 	ScreenProperties screenProperties;
 	DrawMaze drawMaze;
 	DrawPoop drawPoop;
-	Bitmap spreadSheet, background,poop;
+	DrawTime drawTime;
+	Bitmap spreadSheet, background,poop,numberSheet;
 	TimeSystem timeSystem;
 
 	public int row = 5;
 	public int column = 5;
 	
+	public int level =1;
 	//control sweep
 	public float x_start;
 	public float y_start;
@@ -77,6 +79,7 @@ public class TouchExample extends Activity implements OnTouchListener {
 		background = BitmapFactory.decodeResource(getResources(),
 				R.drawable.background2);
 		poop = BitmapFactory.decodeResource(getResources(), R.drawable.poop);
+		numberSheet = BitmapFactory.decodeResource(getResources(), R.drawable.numbersheet);
 		/////////////////////////////////////////////////
 		
 		/////////////////////////////////////////////////
@@ -132,6 +135,7 @@ public class TouchExample extends Activity implements OnTouchListener {
 						drawPoop=null;
 						row=row+1;
 						column=column+1;
+						level=level+1;
 					}
 					
 					updateTime();
@@ -141,10 +145,7 @@ public class TouchExample extends Activity implements OnTouchListener {
 			drawMaze.onDraw(canvas);
 			drawPoop.onDraw(canvas,x_end,x_start,
 					y_end,y_start,isMove);
-			Paint ptPaint = new Paint();
-			ptPaint.setColor(Color.BLACK);
-			canvas.drawText(Long.toString(timeSystem.showMin()), 200, 200, ptPaint);
-			canvas.drawText(Long.toString(timeSystem.showSec()), 200, 250, ptPaint);
+			drawTime.onDraw(canvas, timeSystem.showMin(), timeSystem.showSec(), level);
 			isMove=false;
 		}
 		
@@ -183,7 +184,7 @@ public class TouchExample extends Activity implements OnTouchListener {
 		
 		private void loadAllDrawClass(){
 			if(screenProperties==null){
-				screenProperties = new ScreenProperties(tscreen,spreadSheet,background,poop,
+				screenProperties = new ScreenProperties(tscreen,spreadSheet,background,poop,numberSheet,
 						row,column);
 				MazeGenerator mazeGenerator = new MazeGenerator(row, column);
 				Maze = mazeGenerator.getMaze();
@@ -200,6 +201,9 @@ public class TouchExample extends Activity implements OnTouchListener {
 			}
 			if(drawPoop==null){
 				drawPoop = new DrawPoop(tscreen,Maze,screenProperties);
+			}
+			if(drawTime==null){
+				drawTime = new DrawTime(tscreen, screenProperties);
 			}
 			
 		}
