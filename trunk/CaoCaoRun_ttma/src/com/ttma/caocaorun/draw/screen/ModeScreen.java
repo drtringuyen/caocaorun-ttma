@@ -83,6 +83,7 @@ public class ModeScreen {
 			Intent endlessIntent = new Intent("com.ttma.caocaorun.ENDLESSMODE");
 			endlessIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			screen.startIntent(endlessIntent);
+			MainActivity.resetXY();
 		}
 	}
 
