@@ -19,11 +19,10 @@ import com.ttma.caocaorun.utilities.SoundFactory;
 public class MainActivity extends Activity implements OnTouchListener {
 
 	private ControlView controlView;
+
+	private static int touchX = 0, touchY = 0;
 	
-	private static int touchX, touchY;
 	private static boolean isPress;
-//	private static MediaPlayer mplayer;
-	MediaPlayer music,poop,bubble;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -31,28 +30,38 @@ public class MainActivity extends Activity implements OnTouchListener {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+		loadSound();
+
+		controlView = new ControlView(this);// set draw component here
+
+		controlView.setOnTouchListener(this);// set touch component here
+
+		setInitialValues();
 		
+		controlView.load();// this to load data required
+	}
+
+	private void setInitialValues() {
+		// TODO Auto-generated method stub
+		setContentView(controlView);
+
+		BitmapCollection bitmapCollection = new BitmapCollection();
+
+		Bitmap standardBitmap = bitmapCollection.getBackground(getResources());
+
+		Display display = getWindowManager().getDefaultDisplay();
+
+		BitmapSynchroniser.setInitialParameters(display, standardBitmap);
+		
+	}
+
+	private void loadSound() {
+		// TODO Auto-generated method stub
+		MediaPlayer music, poop, bubble;
 		music = MediaPlayer.create(this, R.raw.music);
 		poop = MediaPlayer.create(this, R.raw.poop);
 		bubble = MediaPlayer.create(this, R.raw.bubble);
-//		mplayer.start();
-		touchX=0;
-		touchY=0;
-		controlView = new ControlView(this);// set draw component here
-		
-		controlView.load();//this to load data required
-		
-		controlView.setOnTouchListener(this);// set touch component here
-		setContentView(controlView);
-		
-		BitmapCollection bitmapCollection=new BitmapCollection();
-		
-		Bitmap standardBitmap=bitmapCollection.getBackground(getResources());
-		
-		Display display = getWindowManager().getDefaultDisplay(); 
-		
-		BitmapSynchroniser.setInitialParameters(display,
-					standardBitmap);
 		SoundFactory.setInititate(music, poop, bubble);
 	}
 
@@ -65,29 +74,28 @@ public class MainActivity extends Activity implements OnTouchListener {
 	public boolean onTouch(View v, MotionEvent event) {
 
 		switch (event.getAction()) {
-		
+
 		case MotionEvent.ACTION_DOWN:
 			float tempX = event.getX();
 			float tempY = event.getY();
 			touchX = (int) tempX;
 			touchY = (int) tempY;
-			isPress=true;
+			isPress = true;
 			break;
 		case MotionEvent.ACTION_UP:
-			
-			isPress=false;
+
+			isPress = false;
 			break;
 		}
 		return true;
 	}
-	
+
 	@Override
 	protected void onPause() {
 		super.onPause();
 		controlView.onPause();
 	}
 
-	
 	@Override
 	protected void onStart() {
 		SoundFactory.playMusic();
@@ -108,21 +116,22 @@ public class MainActivity extends Activity implements OnTouchListener {
 		return touchY;
 	}
 
-	public static void resetXY(){
-		touchX=0;
-		touchY=0;
+	public static void resetXY() {
+		touchX = 0;
+		touchY = 0;
 	}
-	public static boolean isPress(){
+
+	public static boolean isPress() {
 		return isPress;
 	}
-	public void startIntent(Intent intent){
+
+	public void startIntent(Intent intent) {
 		startActivity(intent);
-		finish();
+		// finish();
 	}
-	public void exitGame(){
-		music.stop();
-		poop.stop();
-		bubble.stop();
+
+	public void exitGame() {
+		SoundFactory.stopMusic();
 		finish();
 	}
 }

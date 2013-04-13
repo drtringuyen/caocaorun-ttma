@@ -1,5 +1,7 @@
 package com.ttma.caocaorun.utilities;
 
+import com.ttma.caocaorun.OptionSettings;
+
 import android.media.MediaPlayer;
 
 public class SoundFactory {
@@ -7,10 +9,6 @@ public class SoundFactory {
 	private static MediaPlayer music;
 	private static MediaPlayer poop;
 	private static MediaPlayer bubble;
-	
-	private static boolean musicOn=false;
-	
-	private static boolean soundFXOn=true;
 	
 	public static void setInititate(MediaPlayer music,MediaPlayer poop,MediaPlayer bubble){
 		SoundFactory.music=music;
@@ -20,23 +18,38 @@ public class SoundFactory {
 	}
 	
 	public static void playMusic(){
+		if(OptionSettings.isMusicOn)
 		music.start();
 	}
 	public static void stopMusic(){
 		music.pause();
 	}
 	public static void playBubbleSound(){
-		if(soundFXOn)
+		if(OptionSettings.isSoundOn)
 		bubble.start();
 	}
 	public static void playPoopSound(){
-		if(soundFXOn)
+		if(OptionSettings.isSoundOn)
 		poop.start();
 	}
 	public static void disableSoundFX(){
-		soundFXOn=false;
+		OptionSettings.isFXOn=false;
 	}
 	public static void enableSoundFX(){
-		soundFXOn=true;
+		OptionSettings.isFXOn=true;
+	}
+
+	public static void updateMusic() {
+		if (OptionSettings.isMusicOn) music.start();
+		else music.pause();
+		
+	}
+
+	public static void updateSound() {
+		OptionSettings.isSoundOn=!OptionSettings.isSoundOn;
+	}
+	
+	public static void updateFX() {
+		OptionSettings.isFXOn=!OptionSettings.isFXOn;
 	}
 }

@@ -4,37 +4,28 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.view.SurfaceView;
 
 import com.ttma.caocaorun.ControlView;
 import com.ttma.caocaorun.MainActivity;
 import com.ttma.caocaorun.VisualFX.BubbleButton;
 import com.ttma.caocaorun.utilities.BitmapCollection;
-import com.ttma.caocaorun.utilities.BitmapSynchroniser;
 
-public class ModeScreen {
+public class ModeScreen extends StandardViewScreen{
 
 	private Bitmap back, quiz, horror, endless, custom;
-	private Bitmap background;
-	private BitmapCollection bitmapCollection;
-	private BubbleButton endlessButton, quizButton, horrorButton, customButton,
-			backButton;
+	private BubbleButton endlessButton, quizButton, horrorButton, customButton;
 
-	private boolean selected = false;
-	
-	ControlView screen;
-
-	public ModeScreen(SurfaceView screen, Resources resources) {
+	public ModeScreen(ControlView screen, Resources resources) {
 
 		// create Images
-		bitmapCollection = new BitmapCollection();
-		back = bitmapCollection.getBack(resources);
-		quiz = bitmapCollection.getQuiz(resources);
-		horror = bitmapCollection.getHorror(resources);
-		endless = bitmapCollection.getEndless(resources);
-		custom = bitmapCollection.getCustom(resources);
-		background = bitmapCollection.getModeScreen(resources);
+		super(screen, resources);
+		bitmapColection = new BitmapCollection();
+		back = bitmapColection.getBack(resources);
+		quiz = bitmapColection.getQuiz(resources);
+		horror = bitmapColection.getHorror(resources);
+		endless = bitmapColection.getEndless(resources);
+		custom = bitmapColection.getCustom(resources);
+		background = bitmapColection.getModeScreen(resources);
 
 		this.screen=(ControlView)screen;
 		// create Buttons
@@ -45,35 +36,19 @@ public class ModeScreen {
 				0.1f);
 		customButton = new BubbleButton("customButton", custom, 0.63f, 0.74f,
 				0.1f);
-		backButton = new BubbleButton("backButton", back,  0.671f, 0.906f, 0.1f);
-		backButton.staytill();
+		resumeButton = new BubbleButton("backButton", back,  0.671f, 0.906f, 0.1f);
+		resumeButton.staytill();
 	}
 
-	protected void onDraw(Canvas canvas) {
+	public void onDraw(Canvas canvas) {
 
-		Rect[] backgroundFrame = BitmapSynchroniser
-				.getBackGroundRects(background);
-
-		canvas.drawBitmap(background, backgroundFrame[0], backgroundFrame[1],
-				null);
-		backButton.updateAndDraw(canvas);
+		super.onDraw(canvas);
+		resumeButton.updateAndDraw(canvas);
 		endlessButton.updateAndDraw(canvas);
 		quizButton.updateAndDraw(canvas);
 		horrorButton.updateAndDraw(canvas);
 		customButton.updateAndDraw(canvas);
 		
-	}
-
-	public boolean onResume() {
-		int touchX = MainActivity.getTouchX();
-		int touchY = MainActivity.getTouchY();
-		if (backButton.onTouch(touchX, touchY)) {
-			deselected();
-			MainActivity.resetXY();
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	public void activateButton() {
@@ -89,22 +64,4 @@ public class ModeScreen {
 		}
 	}
 
-	public void bringToTop(Canvas canvas) {
-		selected();
-		onDraw(canvas);
-		activateButton();
-		onResume();
-	}
-
-	public void selected() {
-		this.selected = true;
-	}
-
-	public void deselected() {
-		this.selected = false;
-	}
-
-	public boolean isSelected() {
-		return this.selected;
-	}
 }

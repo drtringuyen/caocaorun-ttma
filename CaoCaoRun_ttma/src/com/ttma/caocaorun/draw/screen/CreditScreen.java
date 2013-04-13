@@ -3,85 +3,38 @@ package com.ttma.caocaorun.draw.screen;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.view.SurfaceView;
 
-import com.ttma.caocaorun.MainActivity;
+import com.ttma.caocaorun.ControlView;
 import com.ttma.caocaorun.VisualFX.BubbleButton;
-import com.ttma.caocaorun.utilities.BitmapCollection;
-import com.ttma.caocaorun.utilities.BitmapSynchroniser;
-public class CreditScreen{
-	
-	private BitmapCollection bitmapCollection;
-	
-	private BubbleButton backButton,poopStayTill;
-	
-	private Bitmap back, background, poop;
-	private SurfaceView screen;
 
-	Paint backgroundColor = new Paint();
+public class CreditScreen extends StandardViewScreen {
 
-	private boolean selected=false;
-	
-	public CreditScreen(SurfaceView screen, Resources resources){
-		
-		this.screen=screen;
-		bitmapCollection = new BitmapCollection();
-		
-		background=bitmapCollection.getCreditScreen(resources);
-		
-		poop= bitmapCollection.getPoopStaytill(resources);
-		
-		back=bitmapCollection.getBackWood(resources);
-		
-		backButton = new BubbleButton("back", back, 0.323f, 0.103f, 0.1f);
-		
-		backButton.staytill();
-		
-		poopStayTill= new BubbleButton("poop", poop, 0.397f,0.888f, 0.1f);
+	private BubbleButton poopStayTill;
+
+	private Bitmap poop;
+
+	public CreditScreen(ControlView screen, Resources resources) {
+
+		super(screen, resources);
+
+		background = bitmapColection.getCreditScreen(resources);
+
+		poop = bitmapColection.getPoopStaytill(resources);
+
+		resumeBitmap = bitmapColection.getBackWood(resources);
+
+		resumeButton = new BubbleButton("back", resumeBitmap, 0.323f, 0.103f,
+				0.1f);
+
+		resumeButton.staytill();
+
+		poopStayTill = new BubbleButton("poop", poop, 0.397f, 0.888f, 0.1f);
 		poopStayTill.staytill();
 	}
-	protected void onDraw(Canvas canvas){
-		canvas.drawRect(0, 0, screen.getWidth(),
-				screen.getHeight(), backgroundColor);
 
-		Rect[] backgroundFrame = BitmapSynchroniser.getBackGroundRects(
-				background);
-		
-		canvas.drawBitmap(background, backgroundFrame[0],
-				backgroundFrame[1], null);
-		
-		backButton.updateAndDraw(canvas);
+	public void onDraw(Canvas canvas){
+		super.onDraw(canvas);
+		resumeButton.updateAndDraw(canvas);
 		poopStayTill.updateAndDraw(canvas);
-	}
-	
-	public boolean onResume(){
-		
-		int touchX=MainActivity.getTouchX();
-		int touchY=MainActivity.getTouchY();
-		if(backButton.onTouch(touchX,touchY)){
-			deselected();
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-	
-	public void bringToTop(Canvas canvas){
-		selected();
-		onDraw(canvas);
-		onResume();
-	}
-	
-	public void selected(){
-		this.selected=true;
-	}
-	public void deselected(){
-		this.selected=false;
-	}
-	public boolean isSelected(){
-		return this.selected;
 	}
 }

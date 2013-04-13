@@ -2,8 +2,8 @@ package com.ttma.caocaorun.utilities;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Rect;
 
+import com.ttma.caocaorun.OptionSettings;
 import com.ttma.caocaorun.VisualFX.BubbleButton;
 
 public class Sprite extends BubbleButton {
@@ -47,11 +47,10 @@ public class Sprite extends BubbleButton {
 
 		canvas.drawBitmap(this.bitmap, this.buttonFrame, this.touchArea, null);
 		updateTime();
-//		super.updateAndDraw(canvas, touchX, touchY);
 	}
 
 	protected void updateButtonFrame() {
-		if (!BubbleButton.allCanFly)
+		if (!OptionSettings.isFXOn)
 			return;
 		clock++;
 		this.buttonFrame = BitmapSynchroniser.getScourceRectFromSprite(bitmap,
