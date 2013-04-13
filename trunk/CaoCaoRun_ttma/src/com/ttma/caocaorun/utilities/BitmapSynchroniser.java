@@ -193,11 +193,16 @@ public class BitmapSynchroniser {
 	public static Rect getDestinationRect(Rect original, float x, float y,
 			boolean fromCenter) {
 
-		int width = (int) (original.width());
-		int height = (int) (original.height());
+		int width = (int) (original.width()*ratio);
+		int height = (int) (original.height()*ratio);
 
 		x *= defautWidth;
 		y *= defautHeight;
+		
+		if (fromCenter){
+			x-=width/2;
+			y-=height/2;
+		}
 
 		return new Rect((int) x, (int) y, (int) (x + width), (int) (y + height));
 	}

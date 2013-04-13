@@ -20,6 +20,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.ttma.caocaorun.R;
+import com.ttma.caocaorun.utilities.BubleText;
 
 public class TouchExample extends Activity implements OnTouchListener {
 	
@@ -40,6 +41,8 @@ public class TouchExample extends Activity implements OnTouchListener {
 	DrawTime drawTime;
 	Bitmap spreadSheet, background,poop,numberSheet;
 	TimeSystem timeSystem;
+	
+	private BubleText time;
 
 	public int row = 5;
 	public int column = 5;
@@ -79,7 +82,11 @@ public class TouchExample extends Activity implements OnTouchListener {
 		background = BitmapFactory.decodeResource(getResources(),
 				R.drawable.background2);
 		poop = BitmapFactory.decodeResource(getResources(), R.drawable.poop);
-		numberSheet = BitmapFactory.decodeResource(getResources(), R.drawable.numbersheet);
+		numberSheet = BitmapFactory.decodeResource(getResources(), R.drawable.babycakefont);
+		
+		BubleText.setInitalParameter(numberSheet);
+		
+		time= new BubleText("this is time", 0.1f, 0.1f, 15, 0.1f);
 		/////////////////////////////////////////////////
 		
 		/////////////////////////////////////////////////
@@ -145,7 +152,11 @@ public class TouchExample extends Activity implements OnTouchListener {
 			drawMaze.onDraw(canvas);
 			drawPoop.onDraw(canvas,x_end,x_start,
 					y_end,y_start,isMove);
-			drawTime.onDraw(canvas, timeSystem.showMin(), timeSystem.showSec(), level);
+//			drawTime.onDraw(canvas, timeSystem.showMin(), timeSystem.showSec(), level);
+			
+			time.updateAndDraw(canvas, timeSystem.showMin()/60,timeSystem.showSec()%60);
+			time.onDraw(canvas);
+			
 			isMove=false;
 		}
 		

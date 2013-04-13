@@ -47,6 +47,11 @@ public class BubleText {
 		drawRightToLeft(canvas);
 	}
 	
+	public void updateAndDraw(Canvas canvas, long minute, long second) {
+		this.content = Long.toString(second);
+		drawRightToLeft(canvas);
+	}
+	
 	public void onDraw(Canvas canvas){
 		drawLeftToRight(canvas);
 	}

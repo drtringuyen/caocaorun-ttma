@@ -65,6 +65,7 @@ public final class R {
         public static final int spreadsheet3=0x7f020033;
         public static final int upercasesheet=0x7f020034;
         public static final int valve=0x7f020035;
+        public static final int valvespreadsheet=0x7f020036;
     }
     public static final class id {
         public static final int menu_settings=0x7f080000;
