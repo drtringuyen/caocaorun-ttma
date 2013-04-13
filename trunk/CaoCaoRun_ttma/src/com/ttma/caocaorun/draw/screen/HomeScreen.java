@@ -13,15 +13,19 @@ import com.ttma.caocaorun.utilities.BitmapSynchroniser;
 
 public class HomeScreen {
 
-	BitmapCollection bitmapCollection;
+	private BitmapCollection bitmapCollection;
+	
 	public BubbleButton playButton, optionsButton, highScoresButton,
-			creditsButton;
+			creditsButton, valve1, valve2, exitButton, helpButton,poopStaytill;
+	
+//	public Sprite poopAnimated;
 
 	private boolean selected = false;
 
 	private ControlView screen;
 
-	public Bitmap background, play, options, highscores, credits, bubble;
+	public Bitmap background, play, options, highscores, credits, bubble,
+			valve, exit, help, poop;
 
 	public HomeScreen(ControlView control, Resources resources) {
 
@@ -29,20 +33,44 @@ public class HomeScreen {
 
 		bitmapCollection = new BitmapCollection();
 
-		background = bitmapCollection.getBackground(resources);
+		background = bitmapCollection.getHomeScreen(resources);
 		play = bitmapCollection.getPlay(resources);
 		options = bitmapCollection.getOptions(resources);
 		highscores = bitmapCollection.getHighscores(resources);
 		credits = bitmapCollection.getCredits(resources);
 		bubble = bitmapCollection.getBubble(resources);
+		valve = bitmapCollection.getValve(resources);
+		exit = bitmapCollection.getExit(resources);
+		help = bitmapCollection.getHelp(resources);
+//		poop= bitmapCollection.getPoopAnimated(resources);
+		poop=bitmapCollection.getPoopStaytill(resources);
 
-		playButton = new BubbleButton("playButton", play, 0.4f, 0.6f, 0.1f);
-		optionsButton = new BubbleButton("optionsButton", options, 0.75f,
-				0.47f, 0.1f);
+		playButton = new BubbleButton("playButton", play, 0.692f, 0.633f, 0.1f);
+		optionsButton = new BubbleButton("optionsButton", options, 0.303f,
+				0.222f, 0.1f);
 		highScoresButton = new BubbleButton("highscoresButton", highscores,
-				0.75f, 0.7f, 0.1f);
-		creditsButton = new BubbleButton("creditsButton", credits, 0.53f,
-				0.84f, 0.1f);
+				0.457f, 0.42f, 0.1f);
+		creditsButton = new BubbleButton("creditsButton", credits, 0.304f,
+				0.732f, 0.1f);
+		valve1 = new BubbleButton("valve1", valve, 0.747f, 0.096f, 0.1f);
+		valve2 = new BubbleButton("valve2", valve, 0.163f, 0.513f, 0.1f);
+		exitButton = new BubbleButton("exit", exit, 0.671f, 0.906f, 0.1f);
+		helpButton =  new BubbleButton("help", help, 0.669f, 0.281f,
+				0.1f);
+//		poopAnimated=new Sprite("help", poop, 0.306f, 0.611f,
+//				0.1f,15);
+		poopStaytill=new BubbleButton("help", poop, 0.306f, 0.611f,
+				0.1f);
+
+		highScoresButton.staytill();
+		valve1.staytill();
+		valve2.staytill();
+		creditsButton.staytill();
+		optionsButton.staytill();
+		exitButton.staytill();
+		helpButton.staytill();
+//		poopAnimated.staytill();
+		poopStaytill.staytill();
 	}
 
 	public void onDraw(Canvas canvas) {
@@ -56,6 +84,12 @@ public class HomeScreen {
 		optionsButton.updateAndDraw(canvas);
 		highScoresButton.updateAndDraw(canvas);
 		creditsButton.updateAndDraw(canvas);
+		exitButton.updateAndDraw(canvas);
+		helpButton.updateAndDraw(canvas);
+		valve1.updateAndDraw(canvas);
+		valve2.updateAndDraw(canvas);
+//		poopAnimated.updateAndDraw(canvas);
+		poopStaytill.updateAndDraw(canvas);
 	}
 
 	public void activateButton() {
@@ -74,13 +108,13 @@ public class HomeScreen {
 
 		MainActivity.resetXY();
 	}
-	
-	public void bringToTop(Canvas canvas){
+
+	public void bringToTop(Canvas canvas) {
 		selected();
 		activateButton();
 		onDraw(canvas);
 	}
-	
+
 	public void selected() {
 		this.selected = true;
 	}
@@ -92,4 +126,11 @@ public class HomeScreen {
 	public boolean isSelected() {
 		return this.selected;
 	}
+
+//	public void bringToBack(Canvas canvas) {
+//		Rect[] backgroundFrame = BitmapSynchroniser
+//				.getBackGroundRects(background);
+//
+//		canvas.drawRect(backgroundFrame[1], b);
+//	}
 }

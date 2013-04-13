@@ -58,8 +58,8 @@ public class TouchExample extends Activity implements OnTouchListener {
 	private long startTime;
 	private long sleepTime;
 	
-	private long standardMin =1;
-	private long standardSec =30;
+	private long standardMin =0;
+	private long standardSec =15;
 	///////////////////////////////////////
 	
 	public Cell[][] Maze = new Cell[100][100];
