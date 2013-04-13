@@ -29,10 +29,11 @@ public class CreditScreen{
 		this.screen=screen;
 		bitmapCollection = new BitmapCollection();
 		
-		background=bitmapCollection.getCreditScreen(resources);	
-		back=bitmapCollection.getBack(resources);
+		background=bitmapCollection.getCreditScreen(resources);
 		
-		backButton = new BubbleButton("back", back, 0.671f, 0.906f, 0.1f);
+		back=bitmapCollection.getBackWood(resources);
+		
+		backButton = new BubbleButton("back", back, 0.323f, 0.103f, 0.1f);
 		
 		backButton.staytill();
 	}

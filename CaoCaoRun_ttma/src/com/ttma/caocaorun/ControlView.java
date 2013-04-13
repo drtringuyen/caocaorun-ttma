@@ -8,6 +8,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.ttma.caocaorun.draw.screen.CreditScreen;
+import com.ttma.caocaorun.draw.screen.HelpScreen;
 import com.ttma.caocaorun.draw.screen.HighScoreScreen;
 import com.ttma.caocaorun.draw.screen.HomeScreen;
 import com.ttma.caocaorun.draw.screen.ModeScreen;
@@ -27,6 +28,7 @@ public class ControlView extends SurfaceView implements Runnable {
 	private OptionScreen optionScreen = null;
 	private ModeScreen modeScreen = null;
 	private HighScoreScreen highScoreScreen = null;
+	private HelpScreen helpScreen=null;
 
 	public int FPS = 30;
 	private long ticksPs = 1000 / FPS;
@@ -87,9 +89,10 @@ public class ControlView extends SurfaceView implements Runnable {
 		boolean isViewModeScreen = modeScreen.isSelected();
 		boolean isViewCreditScreen = creditScreen.isSelected();
 		boolean isViewHighScoreScreen = highScoreScreen.isSelected();
+		boolean isViewHelpScreen = helpScreen.isSelected();
 
 		if (isViewOptionScreen || isViewModeScreen || isViewCreditScreen
-				|| isViewHighScoreScreen) {
+				|| isViewHighScoreScreen||isViewHelpScreen) {
 			
 //			homeScreen.bringToBack(canvas); this is really important
 			
@@ -101,6 +104,8 @@ public class ControlView extends SurfaceView implements Runnable {
 				creditScreen.bringToTop(canvas);
 			if (isViewHighScoreScreen)
 				highScoreScreen.bringToTop(canvas);
+			if (isViewHelpScreen)
+				helpScreen.bringToTop(canvas);
 		} else
 			homeScreen.bringToTop(canvas);
 	}
@@ -117,6 +122,8 @@ public class ControlView extends SurfaceView implements Runnable {
 			creditScreen = new CreditScreen(this, getResources());
 		if (highScoreScreen==null)
 			highScoreScreen = new HighScoreScreen(this, getResources());
+		if (helpScreen==null)
+			helpScreen = new HelpScreen(this, getResources());
 	}
 
 	public void startIntent(Intent intent){
@@ -153,5 +160,8 @@ public class ControlView extends SurfaceView implements Runnable {
 
 	public HighScoreScreen getHighScoreScreen() {
 		return highScoreScreen;
+	}
+	public HelpScreen getHelpScreen() {
+		return helpScreen;
 	}
 }

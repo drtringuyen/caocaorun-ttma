@@ -91,7 +91,6 @@ public class MainActivity extends Activity implements OnTouchListener {
 		controlViewHandler.onResume();
 	}
 
-	
 	public static int getTouchX() {
 		return touchX;
 	}

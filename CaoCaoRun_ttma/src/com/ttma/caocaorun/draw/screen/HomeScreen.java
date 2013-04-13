@@ -99,13 +99,19 @@ public class HomeScreen {
 
 		if (playButton.onTouch(touchX, touchY))
 			screen.getModeScreen().selected();
+		
 		if (optionsButton.onTouch(touchX, touchY))
 			screen.getOptionScreen().selected();
+		
 		if (creditsButton.onTouch(touchX, touchY))
 			screen.getCreditScreen().selected();
+		
 		if (highScoresButton.onTouch(touchX, touchY))
 			screen.getHighScoreScreen().selected();
-
+		
+		if (helpButton.onTouch(touchX, touchY))
+			screen.getHelpScreen().selected();
+		
 		MainActivity.resetXY();
 	}
 

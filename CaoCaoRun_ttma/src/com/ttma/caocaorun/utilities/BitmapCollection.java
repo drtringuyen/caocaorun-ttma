@@ -23,6 +23,12 @@ public class BitmapCollection{
 	public Bitmap getExit(Resources resources) {
 		return BitmapFactory.decodeResource(resources, R.drawable.exit);
 	}
+	public Bitmap getBackWood(Resources resources) {
+		return BitmapFactory.decodeResource(resources, R.drawable.helpback);
+	}
+	public Bitmap getNextWood(Resources resources) {
+		return BitmapFactory.decodeResource(resources, R.drawable.helpnext);
+	}
 	public Bitmap getValve(Resources resources) {
 		return BitmapFactory.decodeResource(resources, R.drawable.valve);
 	}
@@ -88,6 +94,24 @@ public class BitmapCollection{
 	}
 	public Bitmap getModeScreen(Resources resources) {
 		return BitmapFactory.decodeResource(resources, R.drawable.modesscreen);
+	}
+	public Bitmap getHelpScreen(Resources resources) {
+		return BitmapFactory.decodeResource(resources, R.drawable.helpscreen);
+	}
+	public Bitmap getHelp4(Resources resources) {
+		return BitmapFactory.decodeResource(resources, R.drawable.help4);
+	}
+	public Bitmap getHelp1(Resources resources) {
+		return BitmapFactory.decodeResource(resources, R.drawable.help1);
+	}
+	public Bitmap getHelp2(Resources resources) {
+		return BitmapFactory.decodeResource(resources, R.drawable.help2);
+	}
+	public Bitmap getHelp3(Resources resources) {
+		return BitmapFactory.decodeResource(resources, R.drawable.help3);
+	}
+	public Bitmap getHighScoreScreen(Resources resources) {
+		return BitmapFactory.decodeResource(resources, R.drawable.highscorescreen);
 	}
 
 }
