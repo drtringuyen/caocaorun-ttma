@@ -12,23 +12,23 @@ import com.ttma.caocaorun.utilities.SoundFactory;
 
 public class BubbleButton {
 
-	private String name;
+	protected String name;
 
-	private Rect touchArea;// the destination rectangle for the button
-	private Bitmap bitmap;
-	private Rect boundary = null;// invisible box that the buble cannot get out
-	private Rect buttonFrame;// get the original whole bitmap
-	private Rect bufferFrame;
+	protected Rect touchArea;// the destination rectangle for the button
+	protected Bitmap bitmap;
+	protected Rect boundary = null;// invisible box that the buble cannot get out
+	protected Rect buttonFrame;// get the original whole bitmap
+	protected Rect bufferFrame;
 
-	private int x, y;
-	private int dx, dy;
+	protected int x, y;
+	protected int dx, dy;
 
-	private static Paint backgroundColor = new Paint();
-	private static Paint bufferPaint = new Paint();
-	private Random generate = new Random();
+	protected static Paint backgroundColor = new Paint();
+	protected static Paint bufferPaint = new Paint();
+	protected Random generate = new Random();
 
-	private boolean canFly = true;
-	private static boolean allCanFly = true;
+	protected boolean canFly = true;
+	protected static boolean allCanFly = true;
 
 	public BubbleButton(Rect touchArea, Bitmap bitmap) {
 		this.touchArea = touchArea;
@@ -77,7 +77,7 @@ public class BubbleButton {
 		canvas.drawBitmap(this.bitmap, buttonFrame, touchArea, null);
 	}
 	
-	private void updateAndDrawBuffer(Canvas canvas){
+	protected void updateAndDrawBuffer(Canvas canvas){
 		if (!boundary.equals(null) && canFly && allCanFly) {
 			bufferFrame = touchArea;
 			canvas.drawBitmap(this.bitmap, buttonFrame, bufferFrame,
@@ -86,7 +86,7 @@ public class BubbleButton {
 		}
 	}
 	
-	private void reCalculatePosition(){
+	protected void reCalculatePosition(){
 		if (!allCanFly) resetOriginalPosition();
 	}
 
@@ -100,7 +100,7 @@ public class BubbleButton {
 		this.buttonFrame=newButtonFrame;
 	}
 	
-	private void resetOriginalPosition() {
+	protected void resetOriginalPosition() {
 		int x = boundary.centerX();
 		int y = boundary.centerY();
 		Rect newTouchArea = BitmapSynchroniser.getDestinationRect(bitmap, x, y,
@@ -112,7 +112,7 @@ public class BubbleButton {
 		this.touchArea = getNewTouchArea();
 	}
 	
-	private Rect getNewTouchArea(){
+	protected Rect getNewTouchArea(){
 		
 		x = dx + touchArea.centerX();
 		y = dy + touchArea.centerY();
@@ -133,7 +133,7 @@ public class BubbleButton {
 		return newTouchArea;
 	}
 
-	private void setBasicInfo(String name, Bitmap bitmap) {
+	protected void setBasicInfo(String name, Bitmap bitmap) {
 		this.name = name;
 		this.bitmap = bitmap;
 		this.buttonFrame = BitmapSynchroniser.getSourceRect(this.bitmap);

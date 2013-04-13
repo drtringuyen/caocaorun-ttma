@@ -167,4 +167,10 @@ public class ControlView extends SurfaceView implements Runnable {
 	public HelpScreen getHelpScreen() {
 		return helpScreen;
 	}
+
+	public void load() {
+		// TODO Auto-generated method stub
+		loadAllScreens();
+		
+	}
 }

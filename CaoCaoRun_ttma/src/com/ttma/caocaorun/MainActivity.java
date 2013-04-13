@@ -18,7 +18,7 @@ import com.ttma.caocaorun.utilities.SoundFactory;
 
 public class MainActivity extends Activity implements OnTouchListener {
 
-	private ControlView controlViewHandler;
+	private ControlView controlView;
 	
 	private static int touchX, touchY;
 	private static boolean isPress;
@@ -38,10 +38,12 @@ public class MainActivity extends Activity implements OnTouchListener {
 //		mplayer.start();
 		touchX=0;
 		touchY=0;
-		controlViewHandler = new ControlView(this);// set draw component here
-					
-		controlViewHandler.setOnTouchListener(this);// set touch component here
-		setContentView(controlViewHandler);
+		controlView = new ControlView(this);// set draw component here
+		
+		controlView.load();//this to load data required
+		
+		controlView.setOnTouchListener(this);// set touch component here
+		setContentView(controlView);
 		
 		BitmapCollection bitmapCollection=new BitmapCollection();
 		
@@ -82,7 +84,7 @@ public class MainActivity extends Activity implements OnTouchListener {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		controlViewHandler.onPause();
+		controlView.onPause();
 	}
 
 	
@@ -95,7 +97,7 @@ public class MainActivity extends Activity implements OnTouchListener {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		controlViewHandler.onResume();
+		controlView.onResume();
 	}
 
 	public static int getTouchX() {

@@ -15,9 +15,9 @@ public class CreditScreen{
 	
 	private BitmapCollection bitmapCollection;
 	
-	private BubbleButton backButton;
+	private BubbleButton backButton,poopStayTill;
 	
-	private Bitmap back, background;
+	private Bitmap back, background, poop;
 	private SurfaceView screen;
 
 	Paint backgroundColor = new Paint();
@@ -31,11 +31,16 @@ public class CreditScreen{
 		
 		background=bitmapCollection.getCreditScreen(resources);
 		
+		poop= bitmapCollection.getPoopStaytill(resources);
+		
 		back=bitmapCollection.getBackWood(resources);
 		
 		backButton = new BubbleButton("back", back, 0.323f, 0.103f, 0.1f);
 		
 		backButton.staytill();
+		
+		poopStayTill= new BubbleButton("poop", poop, 0.397f,0.888f, 0.1f);
+		poopStayTill.staytill();
 	}
 	protected void onDraw(Canvas canvas){
 		canvas.drawRect(0, 0, screen.getWidth(),
@@ -48,6 +53,7 @@ public class CreditScreen{
 				backgroundFrame[1], null);
 		
 		backButton.updateAndDraw(canvas);
+		poopStayTill.updateAndDraw(canvas);
 	}
 	
 	public boolean onResume(){

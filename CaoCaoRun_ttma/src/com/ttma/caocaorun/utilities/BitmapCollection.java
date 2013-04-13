@@ -32,6 +32,9 @@ public class BitmapCollection{
 	public Bitmap getValve(Resources resources) {
 		return BitmapFactory.decodeResource(resources, R.drawable.valve);
 	}
+	public Bitmap getValveAnimated(Resources resources) {
+		return BitmapFactory.decodeResource(resources, R.drawable.valvespreadsheet);
+	}
 	public Bitmap getPlay(Resources resources) {
 		return BitmapFactory.decodeResource(resources, R.drawable.play);
 	}
