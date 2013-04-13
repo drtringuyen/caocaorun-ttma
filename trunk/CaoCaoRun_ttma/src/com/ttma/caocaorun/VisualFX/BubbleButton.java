@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+import com.ttma.caocaorun.OptionSettings;
 import com.ttma.caocaorun.utilities.BitmapSynchroniser;
 import com.ttma.caocaorun.utilities.SoundFactory;
 
@@ -28,7 +29,6 @@ public class BubbleButton {
 	protected Random generate = new Random();
 
 	protected boolean canFly = true;
-	protected static boolean allCanFly = true;
 
 	public BubbleButton(Rect touchArea, Bitmap bitmap) {
 		this.touchArea = touchArea;
@@ -78,7 +78,7 @@ public class BubbleButton {
 	}
 	
 	protected void updateAndDrawBuffer(Canvas canvas){
-		if (!boundary.equals(null) && canFly && allCanFly) {
+		if (!boundary.equals(null) && canFly && OptionSettings.isFXOn) {
 			bufferFrame = touchArea;
 			canvas.drawBitmap(this.bitmap, buttonFrame, bufferFrame,
 					bufferPaint);
@@ -87,17 +87,13 @@ public class BubbleButton {
 	}
 	
 	protected void reCalculatePosition(){
-		if (!allCanFly) resetOriginalPosition();
+		if (!OptionSettings.isFXOn||!canFly) resetOriginalPosition();
 	}
 
 	public void updateAndDraw(Canvas canvas, int touchX, int touchY) {
 		updateAndDraw(canvas);
 		if (this.onTouch(touchX, touchY))
 			canvas.drawText(this.name + "Touched", 30, 30, backgroundColor);
-	}
-	
-	public void updateButtonFrame(Rect newButtonFrame){
-		this.buttonFrame=newButtonFrame;
 	}
 	
 	protected void resetOriginalPosition() {
@@ -156,10 +152,10 @@ public class BubbleButton {
 	}
 
 	public static void enableFly() {
-		allCanFly = true;
+		OptionSettings.isFXOn = true;
 	}
 
 	public static void disableFly() {
-		allCanFly = false;
+		OptionSettings.isFXOn = false;
 	}
 }

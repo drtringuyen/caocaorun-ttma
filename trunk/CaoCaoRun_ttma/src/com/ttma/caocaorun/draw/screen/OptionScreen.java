@@ -1,171 +1,126 @@
 package com.ttma.caocaorun.draw.screen;
 
-import com.ttma.caocaorun.MainActivity;
-import com.ttma.caocaorun.VisualFX.BubbleButton;
-import com.ttma.caocaorun.utilities.BitmapCollection;
-import com.ttma.caocaorun.utilities.BitmapSynchroniser;
-import com.ttma.caocaorun.utilities.SoundFactory;
-
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.view.SurfaceView;
 
-public class OptionScreen {
-	
-	private Bitmap optionBackground;
-	private Bitmap visualFxOn, soundOn, musicOn, back;
+import com.ttma.caocaorun.ControlView;
+import com.ttma.caocaorun.MainActivity;
+import com.ttma.caocaorun.OptionSettings;
+import com.ttma.caocaorun.VisualFX.BubbleButton;
+import com.ttma.caocaorun.utilities.SoundFactory;
+
+public class OptionScreen extends StandardViewScreen {
+
+	private Bitmap visualFxOn, soundOn, musicOn;
 	private Bitmap visualFxOff, soundOff, musicOff;
-	private BitmapCollection bitmapCollection;
 
-	private boolean selected = false;
-
-	private BubbleButton visualFxButton, soundButton, musicButton, backButton;
-
-	private boolean visualFxSwitch, soundSwitch, musicSwitch;
+	private BubbleButton visualFxButton, soundButton, musicButton;
 
 	private Paint backgroundColor = new Paint();
-	
-	private SurfaceView screen;
 
-	public OptionScreen(SurfaceView screen, Resources resources) {
-		
-		this.screen=screen;
-		
+	public OptionScreen(ControlView screen, Resources resources) {
+
+		super(screen, resources);
+
 		backgroundColor.setARGB(50, 255, 255, 255);
-		bitmapCollection = new BitmapCollection();
 
-		optionBackground = bitmapCollection.getOptionBackground(resources);
-		visualFxOn = bitmapCollection.getVisualFxOn(resources);
-		visualFxOff = bitmapCollection.getVisualFxOff(resources);
-		musicOn = bitmapCollection.getMusicOn(resources);
-		musicOff = bitmapCollection.getMusicOff(resources);
-		soundOn = bitmapCollection.getSoundOn(resources);
-		soundOff = bitmapCollection.getSoundOff(resources);
+		background = bitmapColection.getOptionBackground(resources);
+		visualFxOn = bitmapColection.getVisualFxOn(resources);
+		visualFxOff = bitmapColection.getVisualFxOff(resources);
+		musicOn = bitmapColection.getMusicOn(resources);
+		musicOff = bitmapColection.getMusicOff(resources);
+		soundOn = bitmapColection.getSoundOn(resources);
+		soundOff = bitmapColection.getSoundOff(resources);
 
-		back = bitmapCollection.getBack(resources);
+		resumeBitmap = bitmapColection.getBack(resources);
 
-		getGameOption();
-		visualFxButton = new BubbleButton("visualEffectButton", visualFxOn,
-				0.66f, 0.65f, 0.2f);
-		soundButton = new BubbleButton("soundButton", soundOn, 0.77f, 0.47f,
-				0.2f);
-		musicButton = new BubbleButton("musicButton", musicOn, 0.53f, 0.36f,
-				0.2f);
+		if (OptionSettings.isFXOn)
+			visualFxButton = new BubbleButton("visualEffectButton", visualFxOn,
+					0.66f, 0.65f, 0.2f);
+		else
+			visualFxButton = new BubbleButton("visualEffectButton",
+					visualFxOff, 0.66f, 0.65f, 0.2f);
 
-		backButton = new BubbleButton("resumeButton", back, 0.67f, 0.906f, 0f);
-		backButton.staytill();
+		if (OptionSettings.isSoundOn)
+			soundButton = new BubbleButton("soundButton", soundOn, 0.77f,
+					0.47f, 0.2f);
+		else
+			soundButton = new BubbleButton("soundButton", soundOff, 0.77f,
+					0.47f, 0.2f);
+
+		if (OptionSettings.isSoundOn)
+			musicButton = new BubbleButton("musicButton", musicOn, 0.53f,
+					0.36f, 0.2f);
+		else
+			musicButton = new BubbleButton("musicButton", musicOff, 0.53f,
+					0.36f, 0.2f);
+
+		resumeButton = new BubbleButton("resumeButton", resumeBitmap, 0.67f,
+				0.906f, 0f);
+		resumeButton.staytill();
 	}
 
-	protected void onDraw(Canvas canvas) {
-		
-		Rect[] backgroundFrame = BitmapSynchroniser
-				.getBackGroundRects(optionBackground);
-		
-		canvas.drawRect(0, 0, screen.getWidth(),
-				screen.getHeight(), backgroundColor);
+	public void onDraw(Canvas canvas) {
 
-		canvas.drawBitmap(optionBackground, backgroundFrame[0],
-				backgroundFrame[1], null);
+		canvas.drawRect(0, 0, screen.getWidth(), screen.getHeight(),
+				backgroundColor);
+
+		super.onDraw(canvas);
 
 		visualFxButton.updateAndDraw(canvas);
 		soundButton.updateAndDraw(canvas);
 		musicButton.updateAndDraw(canvas);
 
-		backButton.updateAndDraw(canvas);
-	}
-
-	public boolean onResume() {
-		int touchX = MainActivity.getTouchX();
-		int touchY = MainActivity.getTouchY();
-		if (backButton.onTouch(touchX, touchY)) {
-			deselected();
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public void getGameOption() {
-		visualFxSwitch = true;
-		soundSwitch = true;
-		musicSwitch = true;
-	}
-
-	public void changeGameOption() {
-
+		resumeButton.updateAndDraw(canvas);
 	}
 
 	public void activateButton() {
 		int touchX = MainActivity.getTouchX();
 		int touchY = MainActivity.getTouchY();
-//		boolean isPress = MainActivity.isPress();
 
 		switchFX(touchX, touchY);
 		switchSound(touchX, touchY);
 		switchMusic(touchX, touchY);
 
 		MainActivity.resetXY();
-		changeGameOption();
 	}
 
 	private void switchMusic(int touchX, int touchY) {
 		if (musicButton.onTouch(touchX, touchY)) {
-			musicSwitch = !musicSwitch;
-			if (musicSwitch) {
+
+			if (OptionSettings.isMusicOn) {
 				musicButton.changeBimap(musicOff);
-				SoundFactory.stopMusic();
 			} else {
 				musicButton.changeBimap(musicOn);
-				SoundFactory.playMusic();
 			}
+			OptionSettings.isMusicOn = !OptionSettings.isMusicOn;
+			SoundFactory.updateMusic();
 		}
 	}
 
 	private void switchSound(int touchX, int touchY) {
 		if (soundButton.onTouch(touchX, touchY)) {
-			soundSwitch = !soundSwitch;
-			if (soundSwitch) {
+
+			if (OptionSettings.isSoundOn) {
 				soundButton.changeBimap(soundOff);
-				SoundFactory.disableSoundFX();
 			} else {
 				soundButton.changeBimap(soundOn);
-				SoundFactory.enableSoundFX();
 			}
+			SoundFactory.updateSound();
 		}
 	}
 
 	private void switchFX(int touchX, int touchY) {
 		if (visualFxButton.onTouch(touchX, touchY)) {
-			visualFxSwitch = !visualFxSwitch;
-			if (visualFxSwitch) {
+
+			if (OptionSettings.isFXOn) {
 				visualFxButton.changeBimap(visualFxOff);
-				BubbleButton.disableFly();
 			} else {
 				visualFxButton.changeBimap(visualFxOn);
-				BubbleButton.enableFly();
 			}
+			SoundFactory.updateFX();
 		}
-	}
-
-	public void bringToTop(Canvas canvas) {
-		selected();
-		onDraw(canvas);
-		onResume();
-		activateButton();
-	}
-
-	public void selected() {
-		this.selected = true;
-	}
-
-	public void deselected() {
-		this.selected = false;
-	}
-
-	public boolean isSelected() {
-		return this.selected;
 	}
 }

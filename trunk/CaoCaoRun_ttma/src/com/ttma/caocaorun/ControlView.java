@@ -12,12 +12,13 @@ import com.ttma.caocaorun.draw.screen.HighScoreScreen;
 import com.ttma.caocaorun.draw.screen.HomeScreen;
 import com.ttma.caocaorun.draw.screen.ModeScreen;
 import com.ttma.caocaorun.draw.screen.OptionScreen;
+import com.ttma.caocaorun.draw.screen.StandardViewScreen;
 
 public class ControlView extends SurfaceView implements Runnable {
 
 	private Thread controlViewScreen = null;
 	private SurfaceHolder holder;
-	
+
 	private MainActivity mainActivity;
 
 	private boolean isOk = false;
@@ -26,8 +27,8 @@ public class ControlView extends SurfaceView implements Runnable {
 	private CreditScreen creditScreen = null;
 	private OptionScreen optionScreen = null;
 	private ModeScreen modeScreen = null;
-	private HighScoreScreen highScoreScreen = null;
-	private HelpScreen helpScreen=null;
+	private StandardViewScreen highScoreScreen = null;
+	private HelpScreen helpScreen = null;
 
 	public int FPS = 30;
 	private long ticksPs = 1000 / FPS;
@@ -38,7 +39,7 @@ public class ControlView extends SurfaceView implements Runnable {
 
 	public ControlView(Context context) {
 		super(context);
-		this.mainActivity=(MainActivity)context;
+		this.mainActivity = (MainActivity) context;
 		holder = getHolder();
 	}
 
@@ -52,7 +53,7 @@ public class ControlView extends SurfaceView implements Runnable {
 			if (!holder.getSurface().isValid())
 				continue;
 
-			loadAllScreens();
+//			loadAllScreens();
 
 			canvas = holder.lockCanvas();
 
@@ -91,10 +92,10 @@ public class ControlView extends SurfaceView implements Runnable {
 		boolean isViewHelpScreen = helpScreen.isSelected();
 
 		if (isViewOptionScreen || isViewModeScreen || isViewCreditScreen
-				|| isViewHighScoreScreen||isViewHelpScreen) {
-			
-//			homeScreen.bringToBack(canvas); this is really important
-			
+				|| isViewHighScoreScreen || isViewHelpScreen) {
+
+			homeScreen.bringToBack();
+
 			if (isViewOptionScreen)
 				optionScreen.bringToTop(canvas);
 			if (isViewModeScreen)
@@ -105,30 +106,30 @@ public class ControlView extends SurfaceView implements Runnable {
 				highScoreScreen.bringToTop(canvas);
 			if (isViewHelpScreen)
 				helpScreen.bringToTop(canvas);
-		} else
+		} else {
 			homeScreen.bringToTop(canvas);
+		}
 	}
 
-
 	private void loadAllScreens() {
-		if (homeScreen==null)
+		if (homeScreen == null)
 			homeScreen = new HomeScreen(this, getResources());
-		if (optionScreen==null)
+		if (optionScreen == null)
 			optionScreen = new OptionScreen(this, getResources());
-		if (modeScreen==null)
+		if (modeScreen == null)
 			modeScreen = new ModeScreen(this, getResources());
-		if (creditScreen==null)
+		if (creditScreen == null)
 			creditScreen = new CreditScreen(this, getResources());
-		if (highScoreScreen==null)
+		if (highScoreScreen == null)
 			highScoreScreen = new HighScoreScreen(this, getResources());
-		if (helpScreen==null)
+		if (helpScreen == null)
 			helpScreen = new HelpScreen(this, getResources());
 	}
 
-	public void startIntent(Intent intent){
+	public void startIntent(Intent intent) {
 		mainActivity.startActivity(intent);
 	}
-	
+
 	private void updateTime() {
 		sleepTime = ticksPs - (System.currentTimeMillis() - startTime);
 		try {
@@ -157,13 +158,14 @@ public class ControlView extends SurfaceView implements Runnable {
 		return modeScreen;
 	}
 
-	public HighScoreScreen getHighScoreScreen() {
+	public StandardViewScreen getHighScoreScreen() {
 		return highScoreScreen;
 	}
-	
-	public void exitGame(){
+
+	public void exitGame() {
 		mainActivity.exitGame();
 	}
+
 	public HelpScreen getHelpScreen() {
 		return helpScreen;
 	}
@@ -171,6 +173,6 @@ public class ControlView extends SurfaceView implements Runnable {
 	public void load() {
 		// TODO Auto-generated method stub
 		loadAllScreens();
-		
+
 	}
 }
