@@ -11,12 +11,13 @@ class DrawTime {
 	private int level_w=10;
 	private int level_h=10;
 	private int time_w=10;
-	private int time_h=40;
+	private int time_h;
 	public DrawTime(TouchScreen tscreen,ScreenProperties screenProperties){
 		numberSheet = screenProperties.getNumberSheet();
 		number_size = screenProperties.getNumber_size();
 		number_height = screenProperties.getNumber_height();
 		scaleSize = tscreen.getHeight()/25;
+		time_h = number_height+level_h+10;
 	}
 	protected void onDraw(Canvas canvas, long min, long sec, int level){
 		int st,nd;
