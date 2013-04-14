@@ -11,8 +11,8 @@ public class HighScoreScreen extends StandardViewScreen {
 
 	private Paint backgroundColor = new Paint();
 
-	public HighScoreScreen(ControlView screen, Resources resources) {
-		super(screen, resources);
+	public HighScoreScreen(ControlView controler, Resources resources, boolean isBrowser) {
+		super(controler, resources,isBrowser);
 		
 		backgroundColor.setARGB(50, 255, 255, 255);
 		
@@ -27,7 +27,7 @@ public class HighScoreScreen extends StandardViewScreen {
 
 	@Override
 	public void onDraw(Canvas canvas) {
-		canvas.drawRect(0, 0, screen.getWidth(), screen.getHeight(),
+		canvas.drawRect(0, 0, controler.getWidth(), controler.getHeight(),
 				backgroundColor);
 		super.onDraw(canvas);
 		resumeButton.updateAndDraw(canvas);

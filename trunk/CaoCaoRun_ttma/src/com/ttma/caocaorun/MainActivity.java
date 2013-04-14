@@ -117,8 +117,8 @@ public class MainActivity extends Activity implements OnTouchListener {
 	}
 
 	public static void resetXY() {
-		touchX = 0;
-		touchY = 0;
+		touchX = -100;
+		touchY = -100;
 	}
 
 	public static boolean isPress() {

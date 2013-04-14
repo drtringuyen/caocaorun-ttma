@@ -1,4 +1,4 @@
-package com.ttma.caocaorun.draw.screen;
+package gameplay;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -6,16 +6,17 @@ import android.graphics.Canvas;
 
 import com.ttma.caocaorun.ControlView;
 import com.ttma.caocaorun.VisualFX.BubbleButton;
+import com.ttma.caocaorun.draw.screen.StandardViewScreen;
 
-public class CreditScreen extends StandardViewScreen {
-
+public class StandardGamePlay extends StandardViewScreen {
+	
 	private BubbleButton poopStayTill;
 
 	private Bitmap poop;
 
-	public CreditScreen(ControlView controler, Resources resources, boolean isBrowser) {
+	public StandardGamePlay(ControlView controler, Resources resources,boolean isNavigation) {
 
-		super(controler, resources, isBrowser);
+		super(controler, resources,isNavigation);
 
 		background = bitmapColection.getCreditScreen(resources);
 

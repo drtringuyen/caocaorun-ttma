@@ -20,9 +20,9 @@ public class OptionScreen extends StandardViewScreen {
 
 	private Paint backgroundColor = new Paint();
 
-	public OptionScreen(ControlView screen, Resources resources) {
+	public OptionScreen(ControlView controler, Resources resources,boolean isBrowser) {
 
-		super(screen, resources);
+		super(controler, resources,isBrowser);
 
 		backgroundColor.setARGB(50, 255, 255, 255);
 
@@ -36,35 +36,47 @@ public class OptionScreen extends StandardViewScreen {
 
 		resumeBitmap = bitmapColection.getBack(resources);
 
-		if (OptionSettings.isFXOn)
-			visualFxButton = new BubbleButton("visualEffectButton", visualFxOn,
-					0.66f, 0.65f, 0.2f);
-		else
-			visualFxButton = new BubbleButton("visualEffectButton",
-					visualFxOff, 0.66f, 0.65f, 0.2f);
-
-		if (OptionSettings.isSoundOn)
-			soundButton = new BubbleButton("soundButton", soundOn, 0.77f,
-					0.47f, 0.2f);
-		else
-			soundButton = new BubbleButton("soundButton", soundOff, 0.77f,
-					0.47f, 0.2f);
-
-		if (OptionSettings.isSoundOn)
-			musicButton = new BubbleButton("musicButton", musicOn, 0.53f,
-					0.36f, 0.2f);
-		else
-			musicButton = new BubbleButton("musicButton", musicOff, 0.53f,
-					0.36f, 0.2f);
+		createMusicButton();
+		createFxButton();
+		createSoundButton();
 
 		resumeButton = new BubbleButton("resumeButton", resumeBitmap, 0.67f,
 				0.906f, 0f);
 		resumeButton.staytill();
 	}
 
+	private void createSoundButton() {
+		if (OptionSettings.isSoundOn)
+			musicButton = new BubbleButton("musicButton", musicOn, 0.53f,
+					0.36f, 0.2f);
+		else
+			musicButton = new BubbleButton("musicButton", musicOff, 0.53f,
+					0.36f, 0.2f);
+		
+	}
+
+	private void createFxButton() {
+		if (OptionSettings.isSoundOn)
+			soundButton = new BubbleButton("soundButton", soundOn, 0.77f,
+					0.47f, 0.2f);
+		else
+			soundButton = new BubbleButton("soundButton", soundOff, 0.77f,
+					0.47f, 0.2f);
+		
+	}
+
+	private void createMusicButton() {
+		if (OptionSettings.isFXOn)
+			visualFxButton = new BubbleButton("visualEffectButton", visualFxOn,
+					0.66f, 0.65f, 0.2f);
+		else
+			visualFxButton = new BubbleButton("visualEffectButton",
+					visualFxOff, 0.66f, 0.65f, 0.2f);
+	}
+
 	public void onDraw(Canvas canvas) {
 
-		canvas.drawRect(0, 0, screen.getWidth(), screen.getHeight(),
+		canvas.drawRect(0, 0, controler.getWidth(), controler.getHeight(),
 				backgroundColor);
 
 		super.onDraw(canvas);
