@@ -1,6 +1,5 @@
 package com.ttma.caocaorun;
 
-import gameplay.StandardGamePlay;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
@@ -13,7 +12,8 @@ import com.ttma.caocaorun.draw.screen.HighScoreScreen;
 import com.ttma.caocaorun.draw.screen.HomeScreen;
 import com.ttma.caocaorun.draw.screen.ModeScreen;
 import com.ttma.caocaorun.draw.screen.OptionScreen;
-import com.ttma.caocaorun.draw.screen.StandardViewScreen;
+import com.ttma.caocaorun.draw.standardclass.StandardGameView;
+import com.ttma.caocaorun.draw.standardclass.StandardViewScreen;
 
 public class ControlView extends SurfaceView implements Runnable {
 
@@ -30,7 +30,7 @@ public class ControlView extends SurfaceView implements Runnable {
 	private ModeScreen modeScreen = null;
 	private StandardViewScreen highScoreScreen = null;
 	private HelpScreen helpScreen = null;
-	private StandardGamePlay gamePlayScreen=null;
+	private StandardGameView gamePlayScreen=null;
 
 	public int FPS = 30;
 	private long ticksPs = 1000 / FPS;
@@ -135,7 +135,7 @@ public class ControlView extends SurfaceView implements Runnable {
 		if (helpScreen == null)
 			helpScreen = new HelpScreen(this, getResources(),false);
 		if (gamePlayScreen == null)
-			gamePlayScreen = new StandardGamePlay(this, getResources(),false);
+			gamePlayScreen = new StandardGameView(this, getResources(),false);
 	}
 
 	public void startIntent(Intent intent) {
@@ -172,7 +172,7 @@ public class ControlView extends SurfaceView implements Runnable {
 	public HelpScreen getHelpScreen() {
 		return helpScreen;
 	}
-	public StandardGamePlay getGamePlayScreen() {
+	public StandardGameView getGamePlayScreen() {
 		return gamePlayScreen;
 	}
 	public void exitGame() {

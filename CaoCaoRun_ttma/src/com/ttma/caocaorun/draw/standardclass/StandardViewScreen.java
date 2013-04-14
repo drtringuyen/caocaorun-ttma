@@ -1,4 +1,4 @@
-package com.ttma.caocaorun.draw.screen;
+package com.ttma.caocaorun.draw.standardclass;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -11,7 +11,7 @@ import com.ttma.caocaorun.VisualFX.BubbleButton;
 import com.ttma.caocaorun.utilities.BitmapCollection;
 import com.ttma.caocaorun.utilities.BitmapSynchroniser;
 
-public class StandardViewScreen {
+public abstract class StandardViewScreen {
 
 	protected BitmapCollection bitmapColection;
 	protected Bitmap background;
@@ -26,6 +26,10 @@ public class StandardViewScreen {
 		this.isBrowser=isBrowser;
 		this.controler = controler;
 		bitmapColection = new BitmapCollection();
+		
+		loadAllBitmap(resources);
+		createButtons();
+		loadAnimation();
 	}
 
 	public void onDraw(Canvas canvas) {
@@ -48,9 +52,18 @@ public class StandardViewScreen {
 			return false;
 		}
 	}
+	
+	protected abstract void loadAllBitmap(Resources resources);
+	
+	protected abstract void createButtons();
+	
+	protected abstract void loadAnimation();
 
 	public void activateButton() {
 		//set fly the buttons
+		//in case the screen has subscreen, 
+		//ensure that the subscreen is on top
+		//so bring this browser to back of the subscreen
 		if (isBrowser) this.bringToBack();
 		MainActivity.resetXY();
 	}

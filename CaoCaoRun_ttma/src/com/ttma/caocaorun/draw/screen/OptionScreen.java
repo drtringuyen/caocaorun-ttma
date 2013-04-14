@@ -9,6 +9,7 @@ import com.ttma.caocaorun.ControlView;
 import com.ttma.caocaorun.MainActivity;
 import com.ttma.caocaorun.OptionSettings;
 import com.ttma.caocaorun.VisualFX.BubbleButton;
+import com.ttma.caocaorun.draw.standardclass.StandardViewScreen;
 import com.ttma.caocaorun.utilities.SoundFactory;
 
 public class OptionScreen extends StandardViewScreen {
@@ -23,26 +24,7 @@ public class OptionScreen extends StandardViewScreen {
 	public OptionScreen(ControlView controler, Resources resources,boolean isBrowser) {
 
 		super(controler, resources,isBrowser);
-
 		backgroundColor.setARGB(50, 255, 255, 255);
-
-		background = bitmapColection.getOptionBackground(resources);
-		visualFxOn = bitmapColection.getVisualFxOn(resources);
-		visualFxOff = bitmapColection.getVisualFxOff(resources);
-		musicOn = bitmapColection.getMusicOn(resources);
-		musicOff = bitmapColection.getMusicOff(resources);
-		soundOn = bitmapColection.getSoundOn(resources);
-		soundOff = bitmapColection.getSoundOff(resources);
-
-		resumeBitmap = bitmapColection.getBack(resources);
-
-		createMusicButton();
-		createFxButton();
-		createSoundButton();
-
-		resumeButton = new BubbleButton("resumeButton", resumeBitmap, 0.67f,
-				0.906f, 0f);
-		resumeButton.staytill();
 	}
 
 	private void createSoundButton() {
@@ -134,5 +116,35 @@ public class OptionScreen extends StandardViewScreen {
 			}
 			SoundFactory.updateFX();
 		}
+	}
+
+	@Override
+	protected void loadAllBitmap(Resources resources) {
+		// TODO Auto-generated method stub
+		background = bitmapColection.getOptionBackground(resources);
+		visualFxOn = bitmapColection.getVisualFxOn(resources);
+		visualFxOff = bitmapColection.getVisualFxOff(resources);
+		musicOn = bitmapColection.getMusicOn(resources);
+		musicOff = bitmapColection.getMusicOff(resources);
+		soundOn = bitmapColection.getSoundOn(resources);
+		soundOff = bitmapColection.getSoundOff(resources);
+		resumeBitmap = bitmapColection.getBack(resources);
+	}
+
+	@Override
+	protected void createButtons() {
+		// TODO Auto-generated method stub
+		createMusicButton();
+		createFxButton();
+		createSoundButton();
+
+		resumeButton = new BubbleButton("resumeButton", resumeBitmap, 0.67f,
+				0.906f, 0f);
+		resumeButton.staytill();
+	}
+
+	@Override
+	protected void loadAnimation() {
+		// TODO Auto-generated method stub
 	}
 }

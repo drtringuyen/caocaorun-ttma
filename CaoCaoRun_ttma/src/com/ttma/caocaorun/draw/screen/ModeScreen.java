@@ -1,5 +1,6 @@
 package com.ttma.caocaorun.draw.screen;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -7,6 +8,7 @@ import android.graphics.Canvas;
 import com.ttma.caocaorun.ControlView;
 import com.ttma.caocaorun.MainActivity;
 import com.ttma.caocaorun.VisualFX.BubbleButton;
+import com.ttma.caocaorun.draw.standardclass.StandardViewScreen;
 
 public class ModeScreen extends StandardViewScreen {
 
@@ -15,28 +17,7 @@ public class ModeScreen extends StandardViewScreen {
 
 	public ModeScreen(ControlView controler, Resources resources,
 			boolean isBrowser) {
-
-		// create Images
 		super(controler, resources, isBrowser);
-		resumeBitmap = bitmapColection.getBack(resources);
-		quiz = bitmapColection.getQuiz(resources);
-		horror = bitmapColection.getHorror(resources);
-		endless = bitmapColection.getEndless(resources);
-		custom = bitmapColection.getCustom(resources);
-		background = bitmapColection.getModeScreen(resources);
-
-		this.controler = (ControlView) controler;
-		// create Buttons
-		endlessButton = new BubbleButton("endlessButton", endless, 0.61f,
-				0.28f, 0.1f);
-		quizButton = new BubbleButton("quizButton", quiz, 0.63f, 0.42f, 0.1f);
-		horrorButton = new BubbleButton("horrorButton", horror, 0.63f, 0.6f,
-				0.1f);
-		customButton = new BubbleButton("customButton", custom, 0.63f, 0.74f,
-				0.1f);
-		resumeButton = new BubbleButton("backButton", resumeBitmap, 0.671f,
-				0.906f, 0.1f);
-		resumeButton.staytill();
 	}
 
 	public void onDraw(Canvas canvas) {
@@ -54,12 +35,12 @@ public class ModeScreen extends StandardViewScreen {
 		int touchX = MainActivity.getTouchX();
 		int touchY = MainActivity.getTouchY();
 
-		// if (endlessButton.onTouch(touchX, touchY)) {
-		//
-		// Intent endlessIntent = new Intent("com.ttma.caocaorun.ENDLESSMODE");
-		// endlessIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		// controler.startIntent(endlessIntent);
-		// }
+		 if (endlessButton.onTouch(touchX, touchY)) {
+		
+		 Intent endlessIntent = new Intent("com.ttma.caocaorun.ENDLESSMODE");
+		 endlessIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		 controler.startIntent(endlessIntent);
+		 }
 
 		if (customButton.onTouch(touchX, touchY)) {
 			this.bringToBack();
@@ -67,6 +48,38 @@ public class ModeScreen extends StandardViewScreen {
 		}
 
 		MainActivity.resetXY();
+	}
+
+	@Override
+	protected void loadAllBitmap(Resources resources) {
+		// TODO Auto-generated method stub
+		resumeBitmap = bitmapColection.getBack(resources);
+		quiz = bitmapColection.getQuiz(resources);
+		horror = bitmapColection.getHorror(resources);
+		endless = bitmapColection.getEndless(resources);
+		custom = bitmapColection.getCustom(resources);
+		background = bitmapColection.getModeScreen(resources);
+	}
+
+	@Override
+	protected void createButtons() {
+		// TODO Auto-generated method stub
+		endlessButton = new BubbleButton("endlessButton", endless, 0.61f,
+				0.28f, 0.1f);
+		quizButton = new BubbleButton("quizButton", quiz, 0.63f, 0.42f, 0.1f);
+		horrorButton = new BubbleButton("horrorButton", horror, 0.63f, 0.6f,
+				0.1f);
+		customButton = new BubbleButton("customButton", custom, 0.63f, 0.74f,
+				0.1f);
+		resumeButton = new BubbleButton("backButton", resumeBitmap, 0.671f,
+				0.906f, 0.1f);
+		resumeButton.staytill();
+	}
+
+	@Override
+	protected void loadAnimation() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
