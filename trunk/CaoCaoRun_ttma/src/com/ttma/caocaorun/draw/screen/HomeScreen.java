@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import com.ttma.caocaorun.ControlView;
 import com.ttma.caocaorun.MainActivity;
 import com.ttma.caocaorun.VisualFX.BubbleButton;
+import com.ttma.caocaorun.draw.standardclass.StandardViewScreen;
 import com.ttma.caocaorun.utilities.Sprite;
 
 public class HomeScreen extends StandardViewScreen {
@@ -21,42 +22,7 @@ public class HomeScreen extends StandardViewScreen {
 
 	public HomeScreen(ControlView controler, Resources resources,
 			boolean isBrowser) {
-
 		super(controler, resources, isBrowser);
-
-		background = bitmapColection.getHomeScreen(resources);
-		play = bitmapColection.getPlay(resources);
-		options = bitmapColection.getOptions(resources);
-		highscores = bitmapColection.getHighscores(resources);
-		credits = bitmapColection.getCredits(resources);
-		bubble = bitmapColection.getBubble(resources);
-		valve = bitmapColection.getValveAnimated(resources);
-		resumeBitmap = bitmapColection.getExit(resources);
-		help = bitmapColection.getHelp(resources);
-		poop = bitmapColection.getPoopAnimated(resources);
-
-		playButton = new BubbleButton("playButton", play, 0.692f, 0.633f, 0.1f);
-		optionsButton = new BubbleButton("optionsButton", options, 0.303f,
-				0.222f, 0.1f);
-		highScoresButton = new BubbleButton("highscoresButton", highscores,
-				0.457f, 0.42f, 0.1f);
-		creditsButton = new BubbleButton("creditsButton", credits, 0.304f,
-				0.742f, 0.1f);
-		valve1 = new Sprite("valve1", valve, 0.747f, 0.096f, 0.1f, 6);
-		valve2 = new Sprite("valve2", valve, 0.163f, 0.513f, 0.1f, 6);
-		resumeButton = new BubbleButton("exit", resumeBitmap, 0.671f, 0.906f,
-				0.1f);
-		helpButton = new BubbleButton("help", help, 0.669f, 0.281f, 0.1f);
-		poopAnimated = new Sprite("help", poop, 0.306f, 0.611f, 0.1f, 15);
-
-		highScoresButton.staytill();
-		valve1.staytill();
-		valve2.staytill();
-		creditsButton.staytill();
-		optionsButton.staytill();
-		resumeButton.staytill();
-		helpButton.staytill();
-		poopAnimated.staytill();
 	}
 
 	public void onDraw(Canvas canvas) {
@@ -118,6 +84,55 @@ public class HomeScreen extends StandardViewScreen {
 
 	public void exitGame() {
 		controler.exitGame();
+	}
+
+	@Override
+	protected void loadAllBitmap(Resources resources) {
+		// TODO Auto-generated method stub
+		background = bitmapColection.getHomeScreen(resources);
+		play = bitmapColection.getPlay(resources);
+		options = bitmapColection.getOptions(resources);
+		highscores = bitmapColection.getHighscores(resources);
+		credits = bitmapColection.getCredits(resources);
+		bubble = bitmapColection.getBubble(resources);
+		valve = bitmapColection.getValveAnimated(resources);
+		resumeBitmap = bitmapColection.getExit(resources);
+		help = bitmapColection.getHelp(resources);
+		poop = bitmapColection.getPoopAnimated(resources);
+
+		playButton = new BubbleButton("playButton", play, 0.692f, 0.633f, 0.1f);
+		optionsButton = new BubbleButton("optionsButton", options, 0.303f,
+				0.222f, 0.1f);
+		highScoresButton = new BubbleButton("highscoresButton", highscores,
+				0.457f, 0.42f, 0.1f);
+		creditsButton = new BubbleButton("creditsButton", credits, 0.304f,
+				0.742f, 0.1f);
+		valve1 = new Sprite("valve1", valve, 0.747f, 0.096f, 0.1f, 6);
+		valve2 = new Sprite("valve2", valve, 0.163f, 0.513f, 0.1f, 6);
+		resumeButton = new BubbleButton("exit", resumeBitmap, 0.671f, 0.906f,
+				0.1f);
+		helpButton = new BubbleButton("help", help, 0.669f, 0.281f, 0.1f);
+		
+		poopAnimated = new Sprite("help", poop, 0.306f, 0.611f, 0.1f, 15);
+	}
+
+	@Override
+	protected void createButtons() {
+		// TODO Auto-generated method stub
+		highScoresButton.staytill();
+		valve1.staytill();
+		valve2.staytill();
+		creditsButton.staytill();
+		optionsButton.staytill();
+		resumeButton.staytill();
+		helpButton.staytill();
+	}
+
+	@Override
+	protected void loadAnimation() {
+		// TODO Auto-generated method stub
+		poopAnimated = new Sprite("help", poop, 0.306f, 0.611f, 0.1f, 15);
+		poopAnimated.staytill();
 	}
 
 }

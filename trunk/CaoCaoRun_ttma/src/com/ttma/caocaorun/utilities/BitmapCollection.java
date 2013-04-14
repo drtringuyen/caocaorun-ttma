@@ -8,8 +8,11 @@ import com.ttma.caocaorun.R;
 
 public class BitmapCollection{
 //	private Bitmap background, play, options, highscores, credits, bubble;
+	public Bitmap getEndlessRunModeBackground(Resources resources) {
+		return BitmapFactory.decodeResource(resources, R.drawable.background2);
+	}
 	public Bitmap getBackground(Resources resources) {
-		return BitmapFactory.decodeResource(resources, R.drawable.background);
+		return BitmapFactory.decodeResource(resources, R.drawable.background2);
 	}
 	public Bitmap getCreditScreen(Resources resources) {
 		return BitmapFactory.decodeResource(resources, R.drawable.creditscreen);
@@ -116,5 +119,7 @@ public class BitmapCollection{
 	public Bitmap getHighScoreScreen(Resources resources) {
 		return BitmapFactory.decodeResource(resources, R.drawable.highscorescreen);
 	}
-
+	public static Bitmap getEndlessModeSpreadSheet(Resources resources) {
+		return BitmapFactory.decodeResource(resources, R.drawable.spreadsheet2);
+	}
 }

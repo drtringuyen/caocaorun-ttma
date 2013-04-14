@@ -5,27 +5,28 @@ import java.util.Stack;
 
 public class MazeGenerator {
 
-	private Cell[][] maze = new Cell[100][100];
+	private Cell[][] maze;
 
-	private int HEIGHT = 0;
-	private int WIDTH = 0;
+	private int row = 0;
+	private int column = 0;
 
 	private int visitedCell;
 
 	private Random generate = new Random();
 
 	public MazeGenerator(int height, int width) {
-		this.HEIGHT = height;
-		this.WIDTH = width;
+		this.row = height;
+		this.column = width;
 		initialize();
 		createMaze();
-		makeDoor(0,0,this.WIDTH-1,this.HEIGHT-1);
+		makeDoor(0,0,this.column-1,this.row-1);
 	}
 
 	private void initialize() {
 		// Initialize maze
-		for (int i = 0; i < this.HEIGHT; i++) {
-			for (int j = 0; j < this.WIDTH; j++) {
+		maze = new Cell[row][column];
+		for (int i = 0; i < this.row; i++) {
+			for (int j = 0; j < this.column; j++) {
 				maze[i][j] = new Cell();
 				maze[i][j].setY(i);
 				maze[i][j].setX(j);
@@ -41,7 +42,7 @@ public class MazeGenerator {
 
 	public void createMaze() {
 
-		int totalCell = this.HEIGHT * this.WIDTH;
+		int totalCell = this.row * this.column;
 		Stack<Cell> cellStack = new Stack<Cell>();
 
 		Cell currentCell =getStartCell();
@@ -90,11 +91,11 @@ public class MazeGenerator {
 	}
 
 	public int getHEIGHT() {
-		return HEIGHT;
+		return row;
 	}
 
 	public int getWIDTH() {
-		return WIDTH;
+		return column;
 	}
 
 	// getCell from position-------------------------------------------
@@ -159,7 +160,7 @@ public class MazeGenerator {
 	// of break the wall---------------------------------
 	// check adjection cells
 	private boolean checkBoundary(int Y, int X) {
-		if (Y > this.HEIGHT-1 || X > this.WIDTH-1 || Y < 0 || X <0)
+		if (Y > this.row-1 || X > this.column-1 || Y < 0 || X <0)
 			return true;
 		return false;
 	}
@@ -209,8 +210,8 @@ public class MazeGenerator {
 	}
 
 	private Cell getStartCell() {
-		int randomY = generate.nextInt(HEIGHT);
-		int randomX = generate.nextInt(WIDTH);
+		int randomY = generate.nextInt(row);
+		int randomX = generate.nextInt(column);
 		Cell tempCell = getCurrentCell(randomY, randomX);
 		return tempCell;
 	}
