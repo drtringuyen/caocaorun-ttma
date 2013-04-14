@@ -15,10 +15,10 @@ public class HelpScreen extends StandardViewScreen {
 	private BubbleButton nextButton, poopStayTill;
 	private int step = 1;
 
-	public HelpScreen(ControlView screen, Resources resources) {
+	public HelpScreen(ControlView controler, Resources resources,boolean isBrowser) {
 
 		// create Images
-		super(screen, resources);
+		super(controler, resources,isBrowser);
 
 		background=bitmapColection.getHelpScreen(resources);
 		poop = bitmapColection.getPoopStaytill(resources);

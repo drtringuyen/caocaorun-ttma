@@ -18,10 +18,13 @@ public class StandardViewScreen {
 	protected boolean isView = false;
 	protected Bitmap resumeBitmap;
 	protected BubbleButton resumeButton;
-	protected ControlView screen;
+	protected ControlView controler;
+	
+	protected boolean isBrowser=false;
 
-	public StandardViewScreen(ControlView screen, Resources resources) {
-		this.screen = screen;
+	public StandardViewScreen(ControlView controler, Resources resources, boolean isBrowser) {
+		this.isBrowser=isBrowser;
+		this.controler = controler;
 		bitmapColection = new BitmapCollection();
 	}
 
@@ -38,7 +41,7 @@ public class StandardViewScreen {
 		int touchX = MainActivity.getTouchX();
 		int touchY = MainActivity.getTouchY();
 		if (resumeButton.onTouch(touchX, touchY)) {
-			deselected();
+			bringToBack();
 			MainActivity.resetXY();
 			return true;
 		} else {
@@ -48,6 +51,7 @@ public class StandardViewScreen {
 
 	public void activateButton() {
 		//set fly the buttons
+		if (isBrowser) this.bringToBack();
 		MainActivity.resetXY();
 	}
 	
